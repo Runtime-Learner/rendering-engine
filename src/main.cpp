@@ -1,58 +1,56 @@
 #include <iostream>
 #include <unistd.h>
 #include <vector>
-#include "eigen3/Eigen/Core"
 #include "rendering_engine.h"
- 
-using Eigen::RowVector3d;
-using Eigen::MatrixXd;
-
-Scene getTriangleScene(int width, int height);
-void printHit(MatrixXd img, int width, int height);
+#include <SDL2/SDL.h>
 
 int main(int argc, char* argv[])
 {
-	int width, height;
+        SDL_Window *window;
+        SDL_Renderer *renderer;
+        SDL_Texture *texture;
+        SDL_Event event;
+        SDL_Rect r;
 
-  	// validate user parameters
-	if (argc != 3 || argv[1] == NULL || argv[2] == NULL) {
-		std::cout << "Invalid parameters: ./app <width> <height>\n";
-		std::cout << "Defaulting to 5 x 5 image\n";
-		width = 5;
-		height = 5;
-	}
-	else {
-		width = atoi(argv[1]);
-		height = atoi(argv[2]);
-	}
-
-
-	if (width <= 0 || height <= 0) {
-		std::cout << "invalid width or height parameter. Must be an integer larger than 0.\n";
-		return 0;
-	}
-  Backward_Raytracing renderer;
-  Scene s = getTriangleScene(width, height);
-  MatrixXd c = renderer.render(s); 
-  printHit(c, s.resx, s.resy);
-}
-
-
-
-Scene getTriangleScene(int width, int height) {
-  std::vector<Triangle> geometry;
-  geometry.push_back(Triangle(RowVector3d(5, -2.5, 0), RowVector3d(-5.0, -2.5, 0), RowVector3d(0, 2.5, 0)));
-  PointLight light = PointLight(RowVector3d(0, 15, -15), RowVector3d(36000, 36000, 36000));
-  Camera cam = Camera(RowVector3d(0, 0, -15), RowVector3d(0, 0, 0), RowVector3d(0, 1, 0));
-  Scene s = Scene(geometry, light, cam, 60, width, height);
-  return s;  
-} 
-
-void printHit(MatrixXd img, int width, int height) {
-	    for (int y= 0; y < height; y++) {	
-			for (int x= 0; x < width; x++) {
-            std::cout << img(y * width + x, 0);
+        if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+                SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Couldn't initialize SDL: %s", SDL_GetError());
+                return 3;
         }
-		std::cout << std::endl;
-    }
+
+        window = SDL_CreateWindow("SDL_test",
+                        SDL_WINDOWPOS_UNDEFINED,
+                        SDL_WINDOWPOS_UNDEFINED,
+                        1024, 768,
+                        SDL_WINDOW_RESIZABLE);
+
+        r.w = 100;
+        r.h = 100;
+
+        renderer = SDL_CreateRenderer(window, -1, 0);
+
+        texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 1024, 768);
+
+        while (1) {
+                SDL_PollEvent(&event);
+                if(event.type == SDL_QUIT)
+                        break;
+                r.x= (r.x + 1)%1024;
+                r.y=(r.y + 1)%768;
+
+                SDL_SetRenderTarget(renderer, texture);
+                SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
+                SDL_RenderClear(renderer);
+                SDL_RenderDrawRect(renderer,&r);
+                SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0x00);
+                SDL_RenderFillRect(renderer, &r);
+                SDL_SetRenderTarget(renderer, NULL);
+                SDL_RenderCopy(renderer, texture, NULL, NULL);
+                SDL_RenderPresent(renderer);
+                
+                // calculates to 60 fps
+				SDL_Delay(1000 / 60);
+        }
+        SDL_DestroyRenderer(renderer);
+        SDL_Quit();
+        return 0;
 }
