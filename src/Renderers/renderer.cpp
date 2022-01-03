@@ -50,14 +50,18 @@ MatrixXd Backward_Raytracing::render(Scene scene)  {
             RowVector3d pixel = img_plane_initialPt - del_v * y - del_h * x;
             RowVector3d rayDir = pixel - cam.eye;
             color = trace(scene, Ray(cam.eye, rayDir));
-            imgBuffer.block<1,3>(y * resy + x,0) = color;
+            imgBuffer.block<1,3>(y * resy + x,0) = color.cwiseMin(1).cwiseMax(0);
         }
     }
     return imgBuffer;
 }
 
 static RowVector3d trace(Scene scene, Ray r) {
-    return intersect(scene, r);
+    RowVector3d intersection = intersect(scene, r);
+    if (intersection[0] > 0) {
+        return RowVector3d(1, 0, 0);
+    }
+    return RowVector3d(0,0,0);
 }
 
 static RowVector3d intersect(Scene scene, Ray r) {
