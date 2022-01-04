@@ -12,13 +12,22 @@
 #include "triangle.h"
 
 Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c) {
-v0 = a;
-v1 = b;
-v2 = c;
+    v0 = a;
+    v1 = b;
+    v2 = c;
+}
+
+Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c, RowVector3d color) {
+    v0 = a;
+    v1 = b;
+    v2 = c;
+    mat = color;
 }
 
 RowVector3d Triangle::normal() {
-    RowVector3d vec = v0.cross(v1);
+    RowVector3d e1 = v1 - v0;
+    RowVector3d e2 = v2 - v0;
+    RowVector3d vec = e1.cross(e2);
     vec.normalize();
     return vec;
 }

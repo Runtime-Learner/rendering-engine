@@ -15,6 +15,7 @@
 #include "eigen3/Eigen/Core"
 #include "eigen3/Eigen/Geometry"
 #include "../Ray/ray.cpp"
+#include "../BxDFs/diffuse.cpp"
 
 using Eigen::RowVector3d;
 
@@ -23,9 +24,11 @@ class Triangle {
         RowVector3d v0;
         RowVector3d v1;
         RowVector3d v2;
+        Diffuse mat;
 
         Triangle(RowVector3d a, RowVector3d b, RowVector3d c);
-
+        Triangle(RowVector3d a, RowVector3d b, RowVector3d c, RowVector3d color);
+        
         RowVector3d normal();
 
         double intersect(Ray r);

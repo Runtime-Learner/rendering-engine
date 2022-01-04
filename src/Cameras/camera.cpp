@@ -29,7 +29,6 @@ class Camera {
         Camera(RowVector3d position, RowVector3d direction, RowVector3d up_direction) {
             eye = position;
             dir = direction;
-            dir.normalize();
             up = up_direction;
             up.normalize();
         }

@@ -12,6 +12,7 @@ add_subdirectory(src/Ray)
 add_subdirectory(src/Renderers)
 add_subdirectory(src/Scenes)
 add_subdirectory(src/Shapes)
+add_subdirectory(src/BxDFs)
 
 target_link_libraries(Rendering_Engine_Cpp PUBLIC Cameras)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC Lights)
@@ -19,6 +20,7 @@ target_link_libraries(Rendering_Engine_Cpp PUBLIC Ray)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC Renderers)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC Scenes)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC Shapes)
+target_link_libraries(Rendering_Engine_Cpp PUBLIC BxDFs)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC SDL2)
 
 
