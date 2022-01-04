@@ -13,7 +13,7 @@
 
 static RowVector3d trace(Scene scene, Ray r);
 static RowVector3d intersect(Scene scene, Ray r);
-static RowVector3d shade(Scene scene, RowVector3d hitPt, Triangle hitObj);
+static RowVector3d shade(Scene scene, RowVector3d hitPt, Shape hitObj);
 
 MatrixXd Backward_Raytracing::render(Scene scene)  {
     
@@ -65,7 +65,7 @@ static RowVector3d trace(Scene scene, Ray r) {
     return RowVector3d(0,0,0);
 }
 
-static RowVector3d shade(Scene scene, RowVector3d hit, Triangle hitObj) {
+static RowVector3d shade(Scene scene, RowVector3d hit, Shape hitObj) {
     // add shadow ray
     RowVector3d shadowRay_dir = hit - scene.light.pos;
     RowVector3d shadowRay_origin = scene.light.pos;
@@ -79,11 +79,11 @@ static RowVector3d shade(Scene scene, RowVector3d hit, Triangle hitObj) {
 
     // initialize variables
     double albedo = 1;
-    RowVector3d normal = hitObj.normal(); normal.normalize();
+    RowVector3d normal = hitObj._p->normal(hit); normal.normalize();
     RowVector3d light_dir = -shadowRay_dir; light_dir.normalize();
 
     // Implement radiance of diffusely reflected light for point light
-    RowVector3d Ld = (albedo * M_1_PI * M_1_PI * 0.25)/(dist_squared) * scene.light.radiance.array() * std::max(normal.dot(light_dir), 0.0) * hitObj.mat.c.array();
+    RowVector3d Ld = (albedo * M_1_PI * M_1_PI * 0.25)/(dist_squared) * scene.light.radiance.array() * std::max(normal.dot(light_dir), 0.0) * hitObj._p->mat.c.array();
 
     return Ld;
 }
@@ -108,7 +108,7 @@ static RowVector3d intersect(Scene scene, Ray r) {
     int id = -1;
 
     for (int i = 0; i < n; i++) {
-        d = scene.geometry[i].intersect(r);
+        d = scene.geometry[i]._p->intersect(r);
         if (d > 0.0 && d < t) { 
             t = d;
             id = i;

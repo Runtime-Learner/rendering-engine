@@ -5,5 +5,5 @@
 #include "Ray/ray.cpp"
 #include "Renderers/renderer.h"
 #include "Scenes/scene.cpp"
-#include "Shapes/triangle.h"
+#include "Shapes/Shapes.h"
 #endif

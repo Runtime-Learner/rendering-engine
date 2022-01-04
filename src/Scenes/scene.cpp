@@ -15,7 +15,7 @@
 #include "eigen3/Eigen/Core"
 #include "eigen3/Eigen/Geometry"
 #include "../Ray/ray.cpp"
-#include "../Shapes/triangle.h"
+#include "../Shapes/Shapes.h"
 #include "../Cameras/camera.cpp"
 #include "../Lights/pointlight.cpp"
 
@@ -24,14 +24,14 @@ using Eigen::RowVector3d;
 
 class Scene {
     public:
-        std::vector<Triangle> geometry;
+        std::vector<Shape> geometry;
         PointLight light;    //point light
         Camera camera;
         float fovy; //field of view in vertical direction
         int resx;   //# pixels horizontally
         int resy;   //# pixels vertically
 
-        Scene(std::vector<Triangle> g, PointLight l, Camera c, float fov, int width, int height) {
+        Scene(std::vector<Shape> g, PointLight l, Camera c, float fov, int width, int height) {
             geometry = g;
             light = l;
             camera = c;
@@ -39,6 +39,5 @@ class Scene {
             resx = width;
             resy = height;
         }
-
 };
 #endif
