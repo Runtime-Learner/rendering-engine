@@ -13,7 +13,7 @@
 
 static RowVector3d trace(Scene scene, Ray r);
 static RowVector3d intersect(Scene scene, Ray r);
-static RowVector3d shade(Scene scene, RowVector3d hitPt, Shape hitObj);
+static RowVector3d shade(Scene scene, RowVector3d hitPt, RowVector3d wrWorld, Shape hitObj);
 
 MatrixXd Backward_Raytracing::render(Scene scene)  {
     
@@ -53,6 +53,7 @@ MatrixXd Backward_Raytracing::render(Scene scene)  {
             color = trace(scene, Ray(cam.eye, rayDir));
             imgBuffer.block<1,3>(y * resy + x,0) = color.cwiseMin(1).cwiseMax(0); //TODO: scaling factor can be changed to alter ISO
         }
+        std::cout << x << "/" << resx << std::endl;
     }
     return imgBuffer;
 }
@@ -60,32 +61,33 @@ MatrixXd Backward_Raytracing::render(Scene scene)  {
 static RowVector3d trace(Scene scene, Ray r) {
     RowVector3d intersection = intersect(scene, r);
     if (intersection[0] > 0) {
-        return shade(scene, r.o + r.d * intersection[2], scene.geometry[intersection[1]]);
+        return shade(scene, r.o + r.d * intersection[2], -r.d, scene.geometry[intersection[1]]);
     }
     return RowVector3d(0,0,0);
 }
 
-static RowVector3d shade(Scene scene, RowVector3d hit, Shape hitObj) {
+static RowVector3d shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, Shape hitObj) {
+
     // add shadow ray
-    RowVector3d shadowRay_dir = hit - scene.light.pos;
-    RowVector3d shadowRay_origin = scene.light.pos;
+    RowVector3d shadowRay_dir = hit - scene.light.pos; 
     double dist_squared = shadowRay_dir.dot(shadowRay_dir);
-    Ray shadowRay = Ray(shadowRay_origin, shadowRay_dir, sqrt(dist_squared) - 1e-5);
-    RowVector3d shadowResult = intersect(scene, shadowRay);
+    // Ray shadowRay = Ray(scene.light.pos, shadowRay_dir, sqrt(dist_squared) - 1e-5);
+    // RowVector3d shadowResult = intersect(scene, shadowRay);
     
-    if (shadowResult[0] == 1) {
-        return RowVector3d(0, 0, 0);
-    }
+    // if (shadowResult[0] == 1) {
+    //     return RowVector3d(0, 0, 0);
+    // }
 
     // initialize variables
-    double albedo = 1;
-    RowVector3d normal = hitObj._p->normal(hit); normal.normalize();
-    RowVector3d light_dir = -shadowRay_dir; light_dir.normalize();
+    RowVector3d normal = hitObj._p->normal(hit);
+    RowVector3d wiWorld = -shadowRay_dir; wiWorld.normalize();
+    RowVector3d wiLocal = hitObj._p->getFrame(hit).toLocal(wiWorld);
+    RowVector3d wrLocal = hitObj._p->getFrame(hit).toLocal(wrWorld); //TODO: fix
 
     // Implement radiance of diffusely reflected light for point light
-    RowVector3d Ld = (albedo * M_1_PI * M_1_PI * 0.25)/(dist_squared) * scene.light.radiance.array() * std::max(normal.dot(light_dir), 0.0) * hitObj._p->mat.c.array();
+    RowVector3d Ld = (M_1_PI * 0.25)/(dist_squared) * scene.light.radiance.array() * hitObj._p->mat._p->eval(hit, wiLocal, wrLocal).array();
 
-    return Ld;
+    return hitObj._p->mat._p->eval(hit, wrLocal, wrLocal);
 }
 
 static RowVector3d intersect(Scene scene, Ray r) {

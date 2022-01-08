@@ -20,7 +20,7 @@
 #include "eigen3/Eigen/Core"
 #include "eigen3/Eigen/Geometry"
 #include "../Ray/ray.cpp"
-#include "../BxDFs/diffuse.cpp"
+#include "../BxDFs/BxDFs.h"
 
 using Eigen::RowVector3d;
 using std::vector;
@@ -30,14 +30,19 @@ class Shape {
         struct Interface {
             bool isLightSource;
             RowVector3d radiance;
-            Diffuse mat;
+            BxDF mat;
             virtual RowVector3d normal(RowVector3d point) = 0;
             virtual double intersect(Ray ray)             = 0;
-            // TODO: add support for SIMD matrix_intersect function
 
+            Frame getFrame(RowVector3d hitPt) {
+                return Frame(normal(hitPt));
+            }
+
+            // TODO: add support for SIMD matrix_intersect function
+            // TODO: FIX: BxDF not properly implemented
             Interface() { isLightSource = false; }
             Interface(RowVector3d rad) { radiance = rad; isLightSource = radiance.maxCoeff() > 0; }
-            virtual ~Interface()                          = default;
+            virtual ~Interface() = default;
         };
 
         std::shared_ptr<Interface> _p;

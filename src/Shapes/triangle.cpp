@@ -15,13 +15,14 @@ Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c) {
     v0 = a;
     v1 = b;
     v2 = c;
+    mat = new DiffuseBRDF();
 }
 
-Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c, RowVector3d color) {
+Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c, BxDF bxdf) {
     v0 = a;
     v1 = b;
     v2 = c;
-    mat = color;
+    mat = bxdf;
 }
 
 RowVector3d Triangle::normal() {
