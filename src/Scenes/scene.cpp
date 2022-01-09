@@ -20,7 +20,8 @@
 #include "../Ray/ray.cpp"
 #include "../Shapes/Shapes.h"
 #include "../Cameras/camera.cpp"
-#include "../Lights/pointlight.cpp"
+#include "../Lights/Lights.h"
+#include "../BxDFs/sampler.h"
 
 using Eigen::RowVector3d;
 
@@ -28,19 +29,31 @@ using Eigen::RowVector3d;
 class Scene {
     public:
         std::vector<Shape> geometry;
-        PointLight light;    //point light
+        std::vector<Light> lights;
         Camera camera;
         float fovy; //field of view in vertical direction
         int resx;   //# pixels horizontally
         int resy;   //# pixels vertically
+        Sampler sampler;
 
-        Scene(std::vector<Shape> g, PointLight l, Camera c, float fov, int width, int height) {
+        Scene(std::vector<Shape> g, std::vector<Light> l, Camera c, float fov, int width, int height) {
             geometry = g;
-            light = l;
+            lights = l;
             camera = c;
             fovy = fov;
             resx = width;
             resy = height;
+            sampler = Sampler();
+        }
+
+        Light selectLight() {
+            double index = (sampler.nextSample() * (lights.size()));
+            
+            return lights[(int)index];
+        }
+
+        double lightPdf() {
+            return 1.0 / std::max(1, (int)lights.size());
         }
 
 

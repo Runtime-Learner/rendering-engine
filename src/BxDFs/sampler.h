@@ -12,7 +12,7 @@
 #ifndef __SAMPLER_LIB
 #define __SAMPLER_LIB
 
-#include <random>
+#include <stdlib.h>
 #include <chrono>
 #include <iostream>
 #include "eigen3/Eigen/Core"
@@ -24,20 +24,19 @@ using Eigen::RowVector2d;
 
 class Sampler {
     public:
-    std::default_random_engine generator;
-    std::uniform_real_distribution<double> distribution;
 
     Sampler() {
-        distribution = std::uniform_real_distribution<double>(0.0, 1.0);
-        generator.seed(std::chrono::system_clock::now().time_since_epoch().count());
+        srand(std::chrono::system_clock::now().time_since_epoch().count());
     }
 
     double nextSample() {
-        return distribution(generator);
+        double r = ((double) rand() / (RAND_MAX));
+        
+        return r;
     }
 
     RowVector2d next2D() {
-        return RowVector2d(distribution(generator), distribution(generator));
+        return RowVector2d(nextSample(), nextSample());
     }
 
     static RowVector2d concentricSampleDisk(RowVector2d sample) {

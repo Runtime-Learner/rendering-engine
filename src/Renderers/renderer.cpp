@@ -19,6 +19,7 @@ MatrixXd Backward_Raytracing::render(Scene scene)  {
     
     int resx = scene.resx;
     int resy = scene.resy;
+    int spp = 200;
     float fov = scene.fovy;
     Camera cam = scene.camera;
     MatrixXd imgBuffer(resy * resx, 3);
@@ -39,18 +40,21 @@ MatrixXd Backward_Raytracing::render(Scene scene)  {
     RowVector3d del_v = i_v * del_dir;   // vector used to travel in vertical direction on image plane
     RowVector3d del_h = i_h * del_dir;  // vector used to travel in horizontal direction on image plane
 
-    float seed_v = 0.5 - resy/2.0;
-    float seed_h = 0.5 - resx/2.0;
+    float seed_v = -resy/2.0;
+    float seed_h = -resx/2.0;
     RowVector3d img_plane_initialPt = img_plane_centerPt - del_v * seed_v - del_h * seed_h; // initial point on plane (0,0)
     
     // iterate over all image pixels, generate a ray, and trace it
     RowVector3d color(0, 0, 0);
     for (int x= 0; x < resx; x++) {
-        color = {0, 0, 0};
         for (int y= 0; y < resy; y++) {
-            RowVector3d pixel = img_plane_initialPt - del_v * y - del_h * x;
-            RowVector3d rayDir = pixel - cam.eye;
-            color = trace(scene, Ray(cam.eye, rayDir));
+            color = {0, 0, 0};
+            for (int s = 0; s < spp; s++) {
+                RowVector3d pixel = img_plane_initialPt - del_v * (y + scene.sampler.nextSample()) - del_h * (x + scene.sampler.nextSample());
+                RowVector3d rayDir = pixel - cam.eye;
+                color += trace(scene, Ray(cam.eye, rayDir));
+            }
+            color /= spp;
             imgBuffer.block<1,3>(y * resy + x,0) = color.cwiseMin(1).cwiseMax(0); //TODO: scaling factor can be changed to alter ISO
         }
         std::cout << x << "/" << resx << std::endl;
@@ -69,25 +73,28 @@ static RowVector3d trace(Scene scene, Ray r) {
 static RowVector3d shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, Shape hitObj) {
 
     // add shadow ray
-    RowVector3d shadowRay_dir = hit - scene.light.pos; 
-    double dist_squared = shadowRay_dir.dot(shadowRay_dir);
-    // Ray shadowRay = Ray(scene.light.pos, shadowRay_dir, sqrt(dist_squared) - 1e-5);
-    // RowVector3d shadowResult = intersect(scene, shadowRay);
+    Light light = scene.selectLight();
+    MatrixXd lightInfo = light._p->sampleArea(scene.sampler, hit);
+    RowVector3d light_pos = lightInfo.block<1,3>(0,0);
+    RowVector3d wiWorld = lightInfo.block<1,3>(1,0);
+    double dist_squared = wiWorld.dot(wiWorld);
+    Ray shadowRay = Ray(light_pos, -wiWorld, sqrt(dist_squared) - 1e-5);
+    RowVector3d shadowResult = intersect(scene, shadowRay);
     
-    // if (shadowResult[0] == 1) {
-    //     return RowVector3d(0, 0, 0);
-    // }
+    if (shadowResult[0] == 1) {
+        return RowVector3d(0, 0, 0);
+    }
 
     // initialize variables
     RowVector3d normal = hitObj._p->normal(hit);
-    RowVector3d wiWorld = -shadowRay_dir; wiWorld.normalize();
+    wiWorld.normalize();
     RowVector3d wiLocal = hitObj._p->getFrame(hit).toLocal(wiWorld);
     RowVector3d wrLocal = hitObj._p->getFrame(hit).toLocal(wrWorld); //TODO: fix
 
     // Implement radiance of diffusely reflected light for point light
-    RowVector3d Ld = (M_1_PI * 0.25)/(dist_squared) * scene.light.radiance.array() * hitObj._p->mat._p->eval(hit, wiLocal, wrLocal).array();
+    RowVector3d Ld = (M_1_PI * 0.25)/(dist_squared) * light._p->getRadiance(hit).array() * hitObj._p->mat._p->eval(hit, wiLocal, wrLocal).array();
 
-    return hitObj._p->mat._p->eval(hit, wrLocal, wrLocal);
+    return Ld;//hitObj._p->mat._p->eval(hit, wrLocal, wrLocal);
 }
 
 static RowVector3d intersect(Scene scene, Ray r) {

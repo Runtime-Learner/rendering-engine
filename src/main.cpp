@@ -7,7 +7,6 @@
 
 using Eigen::RowVector3d;
 using Eigen::MatrixXd;
-using std::unique_ptr;
 
 Scene getTriangleScene(int width, int height);
 Scene getCornellBox(int width, int height);
@@ -51,8 +50,8 @@ int main(int argc, char* argv[])
         }
 
         Backward_Raytracing RT_renderer;
-        //Scene s = getCornellBox(width, height);
-        Scene s = getBunnyScene(width, height, 1000);
+        Scene s = getCornellBox(width, height);
+        //Scene s = getBunnyScene(width, height, 1000);
         std::cout << s.geometry.size() << std::endl;
         MatrixXd c = RT_renderer.render(s); 
         printHit(c, s.resx, s.resy, pixels, renderer, texture);
@@ -95,70 +94,75 @@ int initializeWindow(SDL_Window ** window, SDL_Renderer ** renderer, SDL_Texture
 
 Scene getTriangleScene(int width, int height) {
   std::vector<Shape> geometry = {
-        new Triangle({5, -2.5, 0}, {-5.0, -2.5, 0}, {0, 2.5, 0})//, new DiffuseBRDF({1, 0, 0}))
+        new Triangle({5, -2.5, 0}, {-5.0, -2.5, 0}, {0, 2.5, 0}, new DiffuseBRDF({1, 0, 0}))
   };
-  PointLight light = PointLight({0, 15, -15}, {36000, 36000, 36000});
+
+  std::vector<Light> lights = {
+        new PointLight({0, 15, -15}, {36000, 36000, 36000})
+  };
   Camera cam = Camera({0, 0, -15}, {0, 0, 0}, {0, 1, 0});
-  Scene s = Scene(geometry, light, cam, 60, width, height);
+  Scene s = Scene(geometry, lights, cam, 60, width, height);
   return s;  
 } 
 
 Scene getCornellBox(int width, int height) {
-  std::vector<Shape> geometry = {
-    // Floor
-    new Triangle({552.8, 0, 0}, {0, 0, 0}, {0, 0, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
-    new Triangle({552.8, 0, 0}, {0, 0, 559.2}, {552.8, 0, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
-    // Ceiling
-    new Triangle({556.0, 548.8, 0.0}, {556.0, 548.8, 559.2},{0.0, 548.8, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
-    new Triangle({556.0, 548.8, 0.0}, {0.0, 548.8, 559.2}, {0.0, 548.8, 0.0}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
-    // Back Wall
-    new Triangle({549.6, 0.0, 559.2}, {0.0, 0.0, 559.2}, {0.0, 548.8, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
-    new Triangle({549.6, 0.0, 559.2}, {0.0, 548.8, 559.2}, {556.0, 548.8, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
-    // Right Wall
-    new Triangle({0.0, 0.0, 559.2 }, {0.0, 0.0, 0.0}, {0.0, 548.8,   0.0}, new DiffuseBRDF({0.1, 0.37798, 0.07})),
-    new Triangle({0.0, 0.0, 559.2}, {0.0, 548.8, 0.0}, {0.0, 548.8, 559.2}, new DiffuseBRDF({0.1, 0.37798, 0.07})),
-    // Left Wall
-    new Triangle({552.8, 0.0, 0.0}, {549.6, 0.0, 559.2}, {556.0, 548.8, 559.2}, new DiffuseBRDF({0.57, 0.04, 0.04})),
-    new Triangle({552.8, 0.0, 0.0}, {556.0, 548.8, 559.2}, {556.0, 548.8, 0.0}, new DiffuseBRDF({0.57, 0.04, 0.04})),
-    // Short Block
-    new Triangle({130.0, 165.0,  65.0}, {82.0, 165.0, 225.0}, {240.0, 165.0, 272.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({130.0, 165.0,  65.0}, {240.0 ,165.0, 272.0}, {290.0, 165.0, 114.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({290.0, 0.0, 114.0}, {290.0, 165.0, 114.0}, {240.0, 165.0, 272.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({290.0, 0.0, 114.0}, {240.0, 165.0, 272.0}, {240.0, 0.0, 272.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({130.0, 0.0, 65.0}, {130.0, 165.0, 65.0}, {290.0, 165.0, 114.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({130.0, 0.0, 65.0}, {290.0, 165.0, 114.0}, {290.0, 0.0, 114.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({82.0, 0.0, 225.0}, {82.0, 165.0, 225.0}, {130.0, 165.0, 65.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({82.0, 0.0, 225.0}, {130.0, 165.0, 65.0}, {130.0, 0.0, 65.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({240.0, 0.0, 272.0}, {240.0, 165.0, 272.0}, {82.0, 165.0, 225.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({240.0, 0.0, 272.0}, {82.0, 165.0, 225.0}, {82.0, 0.0, 225.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    // Tall Block
-    new Triangle({423.0, 330.0, 247.0}, {265.0, 330.0, 296.0}, {314.0, 330.0, 456.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({423.0, 330.0, 247.0}, {314.0, 330.0, 456.0}, {472.0, 330.0, 406.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({423.0, 0.0, 247.0}, {423.0, 330.0, 247.0}, {472.0, 330.0, 406.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({423.0, 0.0, 247.0}, {472.0, 330.0,  406.0}, {472.0, 0.0, 406.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({472.0, 0.0, 406.0}, {472.0, 330.0,406.0}, {314.0, 330.0, 456.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({472.0, 0.0, 406.0}, {314.0, 330.0, 456.0}, {314.0, 0.0, 456.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({314.0, 0.0, 456.0}, {314.0, 330.0, 456.0}, {265.0, 330.0, 296.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({314.0, 0.0, 456.0}, {265.0,  330.0, 296.0}, {265.0, 0.0, 296.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({265.0, 0.0, 296.0}, {265.0, 330.0, 296.0}, {423.0, 330.0, 247.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
-    new Triangle({265.0, 0.0, 296.0}, {423.0, 330.0, 247.0}, {423.0, 0.0, 247.0}, new DiffuseBRDF({0.85, 0.85, 0.85}))
-  };
-  PointLight light = PointLight({278, 508, 279.5}, {5e6, 5e6, 5e6});
-  Camera cam = Camera({278, 273 , -800}, {278, 273, 0}, {0, 1, 0});
-  Scene s = Scene(geometry, light, cam, 38, width, height);
-  return s;  
+        std::vector<Shape> geometry = {
+                // Floor
+                new Triangle({552.8, 0, 0}, {0, 0, 0}, {0, 0, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
+                new Triangle({552.8, 0, 0}, {0, 0, 559.2}, {552.8, 0, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
+                // Ceiling
+                new Triangle({556.0, 548.8, 0.0}, {556.0, 548.8, 559.2},{0.0, 548.8, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
+                new Triangle({556.0, 548.8, 0.0}, {0.0, 548.8, 559.2}, {0.0, 548.8, 0.0}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
+                // Back Wall
+                new Triangle({549.6, 0.0, 559.2}, {0.0, 0.0, 559.2}, {0.0, 548.8, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
+                new Triangle({549.6, 0.0, 559.2}, {0.0, 548.8, 559.2}, {556.0, 548.8, 559.2}, new DiffuseBRDF({0.885809, 0.698859, 0.666422})),
+                // Right Wall
+                new Triangle({0.0, 0.0, 559.2 }, {0.0, 0.0, 0.0}, {0.0, 548.8,   0.0}, new DiffuseBRDF({0.1, 0.37798, 0.07})),
+                new Triangle({0.0, 0.0, 559.2}, {0.0, 548.8, 0.0}, {0.0, 548.8, 559.2}, new DiffuseBRDF({0.1, 0.37798, 0.07})),
+                // Left Wall
+                new Triangle({552.8, 0.0, 0.0}, {549.6, 0.0, 559.2}, {556.0, 548.8, 559.2}, new DiffuseBRDF({0.57, 0.04, 0.04})),
+                new Triangle({552.8, 0.0, 0.0}, {556.0, 548.8, 559.2}, {556.0, 548.8, 0.0}, new DiffuseBRDF({0.57, 0.04, 0.04})),
+                // Short Block
+                new Triangle({130.0, 165.0,  65.0}, {82.0, 165.0, 225.0}, {240.0, 165.0, 272.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({130.0, 165.0,  65.0}, {240.0 ,165.0, 272.0}, {290.0, 165.0, 114.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({290.0, 0.0, 114.0}, {290.0, 165.0, 114.0}, {240.0, 165.0, 272.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({290.0, 0.0, 114.0}, {240.0, 165.0, 272.0}, {240.0, 0.0, 272.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({130.0, 0.0, 65.0}, {130.0, 165.0, 65.0}, {290.0, 165.0, 114.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({130.0, 0.0, 65.0}, {290.0, 165.0, 114.0}, {290.0, 0.0, 114.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({82.0, 0.0, 225.0}, {82.0, 165.0, 225.0}, {130.0, 165.0, 65.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({82.0, 0.0, 225.0}, {130.0, 165.0, 65.0}, {130.0, 0.0, 65.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({240.0, 0.0, 272.0}, {240.0, 165.0, 272.0}, {82.0, 165.0, 225.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({240.0, 0.0, 272.0}, {82.0, 165.0, 225.0}, {82.0, 0.0, 225.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                // Tall Block
+                new Triangle({423.0, 330.0, 247.0}, {265.0, 330.0, 296.0}, {314.0, 330.0, 456.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({423.0, 330.0, 247.0}, {314.0, 330.0, 456.0}, {472.0, 330.0, 406.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({423.0, 0.0, 247.0}, {423.0, 330.0, 247.0}, {472.0, 330.0, 406.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({423.0, 0.0, 247.0}, {472.0, 330.0,  406.0}, {472.0, 0.0, 406.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({472.0, 0.0, 406.0}, {472.0, 330.0,406.0}, {314.0, 330.0, 456.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({472.0, 0.0, 406.0}, {314.0, 330.0, 456.0}, {314.0, 0.0, 456.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({314.0, 0.0, 456.0}, {314.0, 330.0, 456.0}, {265.0, 330.0, 296.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({314.0, 0.0, 456.0}, {265.0,  330.0, 296.0}, {265.0, 0.0, 296.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({265.0, 0.0, 296.0}, {265.0, 330.0, 296.0}, {423.0, 330.0, 247.0}, new DiffuseBRDF({0.85, 0.85, 0.85})),
+                new Triangle({265.0, 0.0, 296.0}, {423.0, 330.0, 247.0}, {423.0, 0.0, 247.0}, new DiffuseBRDF({0.85, 0.85, 0.85}))
+        };
+        std::vector<Light> lights = {
+                new PointLight({278, 508, 279.5}, {5e6, 5e6, 5e6}),
+                new PointLight({278, 308, 279.5}, {5e6, 5e6, 5e6})
+        };
+        Camera cam = Camera({278, 273 , -800}, {278, 273, 0}, {0, 1, 0});
+        Scene s = Scene(geometry, lights, cam, 38, width, height);
+        return s;  
 } 
 
 Scene getBunnyScene(int width, int height, int scalingFactor) {
-// [-0.09438042  0.0333099  -0.06167917]
-// [-0.0550398  0.0573097  0.0169909]
-
         double x_cam = (-0.09438042 + -0.0550398) / 2.0  * scalingFactor /2.0;
         double y_cam = (0.0333099 + 0.0573097) / 2.0  * scalingFactor * 2.0;
         std::vector<Shape> geometry = Scene::loadObjFile("../object_files/bunny.obj", 1000);
-        PointLight light = PointLight({0.1, 0.1, 0}, {36000, 36000, 36000});
+        std::vector<Light> lights = {
+                new PointLight({0.1, 0.1, 0}, {36000, 36000, 36000})
+        };
         Camera camera = Camera({x_cam, y_cam, scalingFactor / 3.0}, {x_cam, y_cam, -1}, {0, 1, 0});
-        Scene s = Scene(geometry, light, camera, 60, width, height);
+        Scene s = Scene(geometry, lights, camera, 60, width, height);
         return s;
 }
 

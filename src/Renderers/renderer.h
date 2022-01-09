@@ -29,6 +29,5 @@ class Backward_Raytracing {
 
         }
         MatrixXd render(Scene scene);
-
 };
 #endif
