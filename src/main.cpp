@@ -18,23 +18,25 @@ int initializeWindow(SDL_Window ** window, SDL_Renderer ** renderer, SDL_Texture
 
 int main(int argc, char* argv[])
 {
-        int width, height;
+        int width, height, spp;
 
   	// validate user parameters
-	if (argc != 3 || argv[1] == NULL || argv[2] == NULL) {
-		std::cout << "Invalid parameters: ./app <width> <height>\n";
-		std::cout << "Defaulting to 100 x 100 image\n";
+	if (argc != 4 || argv[1] == NULL || argv[2] == NULL || argv[3] == NULL) {
+		std::cout << "Invalid parameters: ./app <width> <height> <sample per pixel>\n";
+		std::cout << "Defaulting to 100 x 100 image, 1 sample\n";
 		width = 100;
 		height = 100;
+                spp = 1;
 	}
 	else {
 		width = atoi(argv[1]);
 		height = atoi(argv[2]);
+                spp = atoi(argv[3]);
 	}
 
 
-	if (width <= 0 || height <= 0) {
-		std::cout << "invalid width or height parameter. Must be an integer larger than 0.\n";
+	if (width <= 0 || height <= 0 || spp <= 0) {
+		std::cout << "Width, height, and spp must be an integer larger than 0.\n";
 		return 0;
 	}
 
@@ -50,10 +52,10 @@ int main(int argc, char* argv[])
         }
 
         Backward_Raytracing RT_renderer;
-        Scene s = getCornellBox(width, height);
-        //Scene s = getBunnyScene(width, height, 1000);
+        //Scene s = getCornellBox(width, height);
+        Scene s = getBunnyScene(width, height, 1000);
         std::cout << s.geometry.size() << std::endl;
-        MatrixXd c = RT_renderer.render(s); 
+        MatrixXd c = RT_renderer.render(s, spp); 
         printHit(c, s.resx, s.resy, pixels, renderer, texture);
 
         while (1) {
@@ -146,8 +148,9 @@ Scene getCornellBox(int width, int height) {
                 new Triangle({265.0, 0.0, 296.0}, {423.0, 330.0, 247.0}, {423.0, 0.0, 247.0}, new DiffuseBRDF({0.85, 0.85, 0.85}))
         };
         std::vector<Light> lights = {
-                new PointLight({278, 508, 279.5}, {5e6, 5e6, 5e6}),
-                new PointLight({278, 308, 279.5}, {5e6, 5e6, 5e6})
+                new PointLight({178, 508, 279.5}, {0, 5e6, 5e6}),
+                new PointLight({278, 508, 279.5}, {5e6, 5e6, 0}),
+                new PointLight({378, 508, 279.5}, {5e6, 0, 5e6})
         };
         Camera cam = Camera({278, 273 , -800}, {278, 273, 0}, {0, 1, 0});
         Scene s = Scene(geometry, lights, cam, 38, width, height);
@@ -158,10 +161,8 @@ Scene getBunnyScene(int width, int height, int scalingFactor) {
         double x_cam = (-0.09438042 + -0.0550398) / 2.0  * scalingFactor /2.0;
         double y_cam = (0.0333099 + 0.0573097) / 2.0  * scalingFactor * 2.0;
         std::vector<Shape> geometry = Scene::loadObjFile("../object_files/bunny.obj", 1000);
-        std::vector<Light> lights = {
-                new PointLight({0.1, 0.1, 0}, {36000, 36000, 36000})
-        };
-        Camera camera = Camera({x_cam, y_cam, scalingFactor / 3.0}, {x_cam, y_cam, -1}, {0, 1, 0});
+        std::vector<Light> lights;
+        Camera camera = Camera({x_cam, y_cam, scalingFactor / 4.0}, {x_cam, y_cam, -1}, {0, 1, 0});
         Scene s = Scene(geometry, lights, camera, 60, width, height);
         return s;
 }
