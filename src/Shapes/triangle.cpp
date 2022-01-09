@@ -15,13 +15,14 @@ Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c) {
     v0 = a;
     v1 = b;
     v2 = c;
+    mat = new DiffuseBRDF();
 }
 
-Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c, RowVector3d color) {
+Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c, BxDF bxdf) {
     v0 = a;
     v1 = b;
     v2 = c;
-    mat = color;
+    mat = bxdf;
 }
 
 RowVector3d Triangle::normal() {
@@ -32,14 +33,18 @@ RowVector3d Triangle::normal() {
     return vec;
 }
 
+RowVector3d Triangle::normal(RowVector3d point) {
+    return normal(); //TODO: implement barycentric interpolation
+}
+
 double Triangle::intersect(Ray r) {
     // std::cout << "intersect start" << std::endl;
-    RowVector3d e1 = v1 - v0;
-    RowVector3d e2 = v2 - v0;
+    auto e1 = v1 - v0;
+    auto e2 = v2 - v0;
     // std::cout << e1 << std::endl;
     // std::cout << e2 << std::endl;
 
-    RowVector3d h = r.d.cross(e2);
+    auto h = r.d.cross(e2);
     // std::cout << h << std::endl;
 
     double a = e1.dot(h);
@@ -51,7 +56,7 @@ double Triangle::intersect(Ray r) {
         
     double f = 1.0/a;
     // std::cout << f << std::endl;
-    RowVector3d s = r.o - v0;
+    auto s = r.o - v0;
     // std::cout << s << std::endl;
     double u = f * s.dot(h);
     // std::cout << u << std::endl;
@@ -60,7 +65,7 @@ double Triangle::intersect(Ray r) {
         return 0.0;
     }
 
-    RowVector3d q = s.cross(e1);
+    auto q = s.cross(e1);
     // std::cout << q << std::endl;
     double v = f * r.d.dot(q);
     // std::cout << v << std::endl;

@@ -14,23 +14,22 @@
 #include <iostream> //TODO: delete
 #include "eigen3/Eigen/Core"
 #include "eigen3/Eigen/Geometry"
-#include "../Ray/ray.cpp"
-#include "../BxDFs/diffuse.cpp"
+#include "Shape.h"
+#include "../BxDFs/BxDFs.h"
 
 using Eigen::RowVector3d;
 
-class Triangle {
+class Triangle : public Shape::Interface {
     public:
         RowVector3d v0;
         RowVector3d v1;
         RowVector3d v2;
-        Diffuse mat;
 
         Triangle(RowVector3d a, RowVector3d b, RowVector3d c);
-        Triangle(RowVector3d a, RowVector3d b, RowVector3d c, RowVector3d color);
+        Triangle(RowVector3d a, RowVector3d b, RowVector3d c, BxDF bxdf);
         
+        RowVector3d normal(RowVector3d point);
         RowVector3d normal();
-
         double intersect(Ray r);
 };
 #endif

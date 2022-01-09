@@ -17,6 +17,7 @@
 #include "eigen3/Eigen/Geometry"
 #include "../Ray/ray.cpp"
 #include "../Scenes/scene.cpp"
+#include "../Shapes/Shapes.h"
 
 using Eigen::RowVector3d;
 using Eigen::MatrixXd;
@@ -28,6 +29,5 @@ class Backward_Raytracing {
 
         }
         MatrixXd render(Scene scene);
-
 };
 #endif
