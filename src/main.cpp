@@ -23,9 +23,9 @@ int main(int argc, char* argv[])
   	// validate user parameters
 	if (argc != 3 || argv[1] == NULL || argv[2] == NULL) {
 		std::cout << "Invalid parameters: ./app <width> <height>\n";
-		std::cout << "Defaulting to 5 x 5 image\n";
-		width = 5;
-		height = 5;
+		std::cout << "Defaulting to 100 x 100 image\n";
+		width = 100;
+		height = 100;
 	}
 	else {
 		width = atoi(argv[1]);
