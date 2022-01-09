@@ -52,8 +52,8 @@ int main(int argc, char* argv[])
         }
 
         Backward_Raytracing RT_renderer;
-        Scene s = getCornellBox(width, height);
-        //Scene s = getBunnyScene(width, height, 1000);
+        //Scene s = getCornellBox(width, height);
+        Scene s = getBunnyScene(width, height, 1000);
         std::cout << s.geometry.size() << std::endl;
         MatrixXd c = RT_renderer.render(s, spp); 
         printHit(c, s.resx, s.resy, pixels, renderer, texture);
@@ -161,10 +161,8 @@ Scene getBunnyScene(int width, int height, int scalingFactor) {
         double x_cam = (-0.09438042 + -0.0550398) / 2.0  * scalingFactor /2.0;
         double y_cam = (0.0333099 + 0.0573097) / 2.0  * scalingFactor * 2.0;
         std::vector<Shape> geometry = Scene::loadObjFile("../object_files/bunny.obj", 1000);
-        std::vector<Light> lights = {
-                new PointLight({0.1, 0.1, 0}, {36000, 36000, 36000})
-        };
-        Camera camera = Camera({x_cam, y_cam, scalingFactor / 3.0}, {x_cam, y_cam, -1}, {0, 1, 0});
+        std::vector<Light> lights;
+        Camera camera = Camera({x_cam, y_cam, scalingFactor / 4.0}, {x_cam, y_cam, -1}, {0, 1, 0});
         Scene s = Scene(geometry, lights, camera, 60, width, height);
         return s;
 }
