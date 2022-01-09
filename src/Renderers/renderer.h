@@ -28,6 +28,6 @@ class Backward_Raytracing {
         Backward_Raytracing() {
 
         }
-        MatrixXd render(Scene scene);
+        MatrixXd render(Scene scene, int spp);
 };
 #endif

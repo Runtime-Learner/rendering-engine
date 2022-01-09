@@ -15,11 +15,10 @@ static RowVector3d trace(Scene scene, Ray r);
 static RowVector3d intersect(Scene scene, Ray r);
 static RowVector3d shade(Scene scene, RowVector3d hitPt, RowVector3d wrWorld, Shape hitObj);
 
-MatrixXd Backward_Raytracing::render(Scene scene)  {
+MatrixXd Backward_Raytracing::render(Scene scene, int spp)  {
     
     int resx = scene.resx;
     int resy = scene.resy;
-    int spp = 200;
     float fov = scene.fovy;
     Camera cam = scene.camera;
     MatrixXd imgBuffer(resy * resx, 3);
@@ -74,6 +73,7 @@ static RowVector3d shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, Shap
 
     // add shadow ray
     Light light = scene.selectLight();
+    double light_pdf = scene.lightPdf();
     MatrixXd lightInfo = light._p->sampleArea(scene.sampler, hit);
     RowVector3d light_pos = lightInfo.block<1,3>(0,0);
     RowVector3d wiWorld = lightInfo.block<1,3>(1,0);
