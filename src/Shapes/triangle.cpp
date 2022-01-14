@@ -10,6 +10,7 @@
  */
 
 #include "triangle.h"
+#include "matrix_ops.h"
 
 Triangle::Triangle(RowVector3d a, RowVector3d b, RowVector3d c) {
     v0 = a;
@@ -77,4 +78,26 @@ double Triangle::intersect(Ray r) {
     // std::cout << t << std::endl;
 
     return t;
+}
+
+MatrixXd Triangle::intersect_matrix(MatrixXd rayDir_mat, RowVector3d initialPt) {
+    auto e1 = v1 - v0;
+    auto e2 = v2 - v0;
+
+    auto h = matrix_cross(rayDir_mat, e2);
+
+    MatrixXd a = matrix_dot(h, e1);
+
+        
+    auto f = a.cwiseInverse();
+    auto s = initialPt - v0;
+
+    auto u = matrix_rowMulWithScalar(matrix_dot(h, s), f);
+    auto q = s.cross(e1);
+    auto v = matrix_rowMulWithScalar(matrix_dot(rayDir_mat, q), f);
+
+    MatrixXd t = f * e2.dot(q);
+
+    MatrixXd dist = (u.array() < 0.0 || v.array() < 0.0 || v.array() + u.array() > 1.0 || a.array().abs() < 1.0e-6).select(0, t);
+    return dist;
 }

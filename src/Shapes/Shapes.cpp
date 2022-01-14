@@ -12,4 +12,7 @@
 #ifndef __SHAPES_LIBRARY
 #define __SHAPES_LIBRARY
 #include "triangle.cpp"
+#include "sphere.cpp"
+#include "matrix_ops.cpp"
+// #include "box.cpp" //TODO: FIX
 #endif

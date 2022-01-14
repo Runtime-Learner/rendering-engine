@@ -31,5 +31,6 @@ class Triangle : public Shape::Interface {
         RowVector3d normal(RowVector3d point);
         RowVector3d normal();
         double intersect(Ray r);
+        MatrixXd intersect_matrix(MatrixXd rayDir_mat, RowVector3d initialPt);
 };
 #endif
