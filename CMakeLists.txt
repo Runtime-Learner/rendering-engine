@@ -8,6 +8,9 @@ add_executable(Rendering_Engine_Cpp src/main.cpp)
 # add eigen library
 include_directories(lib)
 
+# add SDL2 library
+add_subdirectory(lib/SDL2-2.0.20)
+
 # add the libraries
 add_subdirectory(src/Cameras)
 add_subdirectory(src/Lights)
