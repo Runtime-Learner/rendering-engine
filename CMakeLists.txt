@@ -5,6 +5,9 @@ project(Rendering_Engine_Cpp VERSION 0.1.0)
 # add the executable
 add_executable(Rendering_Engine_Cpp src/main.cpp)
 
+# add eigen library
+include_directories(lib)
+
 # add the libraries
 add_subdirectory(src/Cameras)
 add_subdirectory(src/Lights)
