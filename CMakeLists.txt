@@ -29,13 +29,6 @@ target_link_libraries(Rendering_Engine_Cpp PUBLIC Shapes)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC BxDFs)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC SDL2)
 
-# add the binary tree to the search path for include files
-# so that we will find SDL.h
-target_include_directories(SDL2 PUBLIC
-                          "${PROJECT_BINARY_DIR}"
-                          "${PROJECT_SOURCE_DIR}/include"
-                          )
-
 include(CTest)
 enable_testing()
 

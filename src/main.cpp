@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 #include "rendering_engine.h"
-#include <SDL2/SDL.h>
+#include "../lib/SDL2-2.0.20/include/SDL.h"
 
 using Eigen::RowVector3d;
 using Eigen::MatrixXd;
