@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <ProjectOutputs>
+    <ProjectOutput>
+      <FullPath>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\x64\Release\ZERO_CHECK</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\lib\SDL2-2.0.20\Release\SDL2.dll</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\Release\Rendering_Engine_Cpp.exe</FullPath>
+    </ProjectOutput>
+    <ProjectOutput>
+      <FullPath>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\x64\Release\ALL_BUILD</FullPath>
+    </ProjectOutput>
+  </ProjectOutputs>
+  <ContentFiles />
+  <SatelliteDlls />
+  <NonRecipeFileRefs />
+</Project>

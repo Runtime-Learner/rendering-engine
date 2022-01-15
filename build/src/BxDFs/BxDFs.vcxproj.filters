@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\src\BxDFs\BxDFs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\src\BxDFs\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{3D665368-423E-3AD8-9E73-5229E5851ED4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

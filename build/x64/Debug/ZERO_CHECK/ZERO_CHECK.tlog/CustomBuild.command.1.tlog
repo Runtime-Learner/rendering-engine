@@ -1,0 +1,10 @@
+^D:\(PROGRAMMINGPROJECTS)\TWITCH_PROJECTS\RENDERING-ENGINE\BUILD\CMAKEFILES\50C3308C34F9F1544793DE95FB7969C9\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine -BD:/(programmingProjects)/Twitch_projects/rendering-engine/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/(programmingProjects)/Twitch_projects/rendering-engine/build/Rendering_Engine_Cpp.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
