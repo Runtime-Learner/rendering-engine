@@ -1,5 +1,10 @@
+#define SDL_MAIN_HANDLED
+
+#ifdef _MSC_VER
+#    pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+#endif
+
 #include <iostream>
-#include <unistd.h>
 #include <memory>
 #include <vector>
 #include "rendering_engine.h"
@@ -18,6 +23,7 @@ int initializeWindow(SDL_Window ** window, SDL_Renderer ** renderer, SDL_Texture
 
 int main(int argc, char* argv[])
 {
+        std::cout << "hello\n";
         int width, height, spp;
 
   	// validate user parameters
@@ -81,7 +87,7 @@ int initializeWindow(SDL_Window ** window, SDL_Renderer ** renderer, SDL_Texture
                 return 3;
         }
 
-        *window = SDL_CreateWindow("SDL_test",
+        *window = SDL_CreateWindow("SDL_renderer",
                         SDL_WINDOWPOS_UNDEFINED,
                         SDL_WINDOWPOS_UNDEFINED,
                         500, 500,

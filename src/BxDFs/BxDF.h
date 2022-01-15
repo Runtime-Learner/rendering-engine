@@ -2,6 +2,10 @@
 #ifndef __BxDF_INTERFACE_RENDERER
 #define  __BxDF_INTERFACE_RENDERER
 
+#ifndef _USE_MATH_DEFINES
+    #define _USE_MATH_DEFINES
+    #include <corecrt_math_defines.h>
+#endif
 #include <vector>
 #include <memory>
 #include "eigen3/Eigen/Core"

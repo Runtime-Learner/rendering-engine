@@ -64,7 +64,8 @@ class Scene {
             std::vector< RowVector2d > temp_uvs;
             std::vector< RowVector3d > temp_normals;
             std::cout << "loading obj file \'" << filepath << "\'" << std::endl;
-            FILE * file = fopen(filepath.c_str(), "r");
+            FILE * file;
+            fopen_s(&file, filepath.c_str(), "r");
             if( file == NULL ){
                 printf("Impossible to open the file !\n");
                 return geometry;

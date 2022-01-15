@@ -12,6 +12,11 @@
 #ifndef __SAMPLER_LIB
 #define __SAMPLER_LIB
 
+#ifndef _USE_MATH_DEFINES
+    #define _USE_MATH_DEFINES
+    #include <corecrt_math_defines.h>
+#endif
+
 #include <stdlib.h>
 #include <chrono>
 #include <iostream>
@@ -26,7 +31,7 @@ class Sampler {
     public:
 
     Sampler() {
-        srand(std::chrono::system_clock::now().time_since_epoch().count());
+        srand((unsigned int) std::chrono::system_clock::now().time_since_epoch().count());
     }
 
     double nextSample() {

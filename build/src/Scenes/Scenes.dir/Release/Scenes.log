@@ -1,0 +1,8 @@
+﻿  Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/src/Scenes/CMakeLists.txt
+  scene.cpp
+D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes\scene.cpp(78,27): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes\scene.cpp(85,21): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes\scene.cpp(101,35): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes\scene.cpp(100,50): warning C4101: 'uvIndex': unreferenced local variable
+D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes\scene.cpp(100,62): warning C4101: 'normalIndex': unreferenced local variable
+  Scenes.vcxproj -> D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\Release\Scenes.lib

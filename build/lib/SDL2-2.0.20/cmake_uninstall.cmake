@@ -1,13 +1,13 @@
-if (NOT EXISTS "/home/matt/Documents/Programming/rendering-engine/build/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"/home/matt/Documents/Programming/rendering-engine/build/install_manifest.txt\"")
-endif(NOT EXISTS "/home/matt/Documents/Programming/rendering-engine/build/install_manifest.txt")
+if (NOT EXISTS "D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/install_manifest.txt\"")
+endif(NOT EXISTS "D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/install_manifest.txt")
 
-file(READ "/home/matt/Documents/Programming/rendering-engine/build/install_manifest.txt" files)
+file(READ "D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach (file ${files})
     message(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")
     execute_process(
-        COMMAND /usr/bin/cmake -E remove "$ENV{DESTDIR}${file}"
+        COMMAND C:/Program Files/CMake/bin/cmake.exe -E remove "$ENV{DESTDIR}${file}"
         OUTPUT_VARIABLE rm_out
         RESULT_VARIABLE rm_retval
     )
