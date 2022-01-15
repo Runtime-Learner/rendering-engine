@@ -2,10 +2,13 @@
 #ifndef __BxDF_INTERFACE_RENDERER
 #define  __BxDF_INTERFACE_RENDERER
 
+#ifdef _MSC_VER
 #ifndef _USE_MATH_DEFINES
     #define _USE_MATH_DEFINES
     #include <corecrt_math_defines.h>
 #endif
+#endif
+
 #include <vector>
 #include <memory>
 #include "eigen3/Eigen/Core"

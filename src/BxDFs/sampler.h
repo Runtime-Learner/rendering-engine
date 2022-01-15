@@ -12,10 +12,14 @@
 #ifndef __SAMPLER_LIB
 #define __SAMPLER_LIB
 
-#ifndef _USE_MATH_DEFINES
-    #define _USE_MATH_DEFINES
-    #include <corecrt_math_defines.h>
+
+#ifdef _MSC_VER
+    #ifndef _USE_MATH_DEFINES
+        #define _USE_MATH_DEFINES
+        #include <corecrt_math_defines.h>
+    #endif
 #endif
+
 
 #include <stdlib.h>
 #include <chrono>
@@ -35,7 +39,12 @@ class Sampler {
     }
 
     double nextSample() {
-        double r = ( rand() / ((double)(RAND_MAX + 1)));
+        #ifdef _MSC_VER
+            double r = ( rand() / ((double)(RAND_MAX + 1)));
+        #else
+            double r = ( rand() / ((double)(RAND_MAX)));
+        #endif
+        
         
         return r;
     }
