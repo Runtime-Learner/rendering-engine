@@ -30,9 +30,9 @@ int main(int argc, char* argv[])
 	if (argc != 4 || argv[1] == NULL || argv[2] == NULL || argv[3] == NULL) {
 		std::cout << "Invalid parameters: ./app <width> <height> <sample per pixel>\n";
 		std::cout << "Defaulting to 100 x 100 image, 1 sample\n";
-		width = 100;
-		height = 100;
-                spp = 1;
+		width = 250;
+		height = 250;
+                spp = 20;
 	}
 	else {
 		width = atoi(argv[1]);
@@ -58,8 +58,8 @@ int main(int argc, char* argv[])
         }
 
         Backward_Raytracing RT_renderer;
-        //Scene s = getCornellBox(width, height);
-        Scene s = getBunnyScene(width, height, 1000);
+        Scene s = getCornellBox(width, height);
+        // Scene s = getBunnyScene(width, height, 1000);
         std::cout << s.geometry.size() << std::endl;
         MatrixXd c = RT_renderer.render(s, spp); 
         printHit(c, s.resx, s.resy, pixels, renderer, texture);
@@ -166,7 +166,7 @@ Scene getCornellBox(int width, int height) {
 Scene getBunnyScene(int width, int height, int scalingFactor) {
         double x_cam = (-0.09438042 + -0.0550398) / 2.0  * scalingFactor /2.0;
         double y_cam = (0.0333099 + 0.0573097) / 2.0  * scalingFactor * 2.0;
-        std::vector<Shape> geometry = Scene::loadObjFile("../object_files/bunny.obj", 1000);
+        std::vector<Shape> geometry = Scene::loadObjFile("../../object_files/bunny.obj", 1000);
         std::vector<Light> lights;
         Camera camera = Camera({x_cam, y_cam, scalingFactor / 4.0}, {x_cam, y_cam, -1}, {0, 1, 0});
         Scene s = Scene(geometry, lights, camera, 60, width, height);

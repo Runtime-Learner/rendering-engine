@@ -1,6 +1,6 @@
-^D:\(PROGRAMMINGPROJECTS)\TWITCH_PROJECTS\RENDERING-ENGINE-MAIN-(1)\RENDERING-ENGINE-MAIN\SRC\RAY\CMAKELISTS.TXT
+^D:\(PROGRAMMINGPROJECTS)\TWITCH_PROJECTS\RENDERING-ENGINE\SRC\RAY\CMAKELISTS.TXT
 setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main -BD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/src/Ray/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine -BD:/(programmingProjects)/Twitch_projects/rendering-engine/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine/build/src/Ray/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

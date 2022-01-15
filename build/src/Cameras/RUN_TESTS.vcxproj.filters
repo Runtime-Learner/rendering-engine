@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\CMakeFiles\792273ee22e65345ebaf29f2bc616d16\RUN_TESTS_force.rule">
+    <CustomBuild Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\build\CMakeFiles\a1e589743e541fc6ced0725bb78d984a\RUN_TESTS_force.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{9ABF2E98-7814-3B11-B9CE-15ADECAF6F92}</UniqueIdentifier>
+      <UniqueIdentifier>{EDFC804E-4376-3126-83C8-3C0C96AEE191}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

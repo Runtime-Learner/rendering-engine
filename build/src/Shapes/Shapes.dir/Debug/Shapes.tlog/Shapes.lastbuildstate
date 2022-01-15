@@ -1,2 +1,2 @@
-PlatformToolSet=v142:VCToolArchitecture=Native64Bit:VCToolsVersion=14.29.30133:VCServicingVersionATL=14.29.30136:VCServicingVersionCrtHeaders=14.29.30136:TargetPlatformVersion=10.0.19041.0:
-Debug|x64|D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\|
+PlatformToolSet=v142:VCToolArchitecture=Native64Bit:VCToolsVersion=14.29.30133:VCServicingVersionCrtHeaders=14.29.30136:TargetPlatformVersion=10.0.19041.0:
+Debug|x64|D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Shapes\|

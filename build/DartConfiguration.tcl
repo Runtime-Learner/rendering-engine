@@ -4,8 +4,8 @@
 
 
 # Configuration directories and files
-SourceDirectory: D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main
-BuildDirectory: D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build
+SourceDirectory: D:/(programmingProjects)/Twitch_projects/rendering-engine
+BuildDirectory: D:/(programmingProjects)/Twitch_projects/rendering-engine/build
 
 # Where to place the cost data store
 CostDataFile: 
@@ -26,7 +26,7 @@ SubmitURL: http://
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main"
+ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "D:/(programmingProjects)/Twitch_projects/rendering-engine"
 MakeCommand: "C:\Program Files\CMake\bin\cmake.exe" --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 
@@ -57,9 +57,9 @@ P4UpdateOptions:
 P4UpdateCustom: 
 
 # Generic update command
-UpdateCommand: 
+UpdateCommand: D:/Program Files/Git/cmd/git.exe
 UpdateOptions: 
-UpdateType: 
+UpdateType: git
 
 # Compiler info
 Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/BuildTools/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe

@@ -1,8 +1,8 @@
-if (NOT EXISTS "D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/install_manifest.txt\"")
-endif(NOT EXISTS "D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/install_manifest.txt")
+if (NOT EXISTS "D:/(programmingProjects)/Twitch_projects/rendering-engine/build/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"D:/(programmingProjects)/Twitch_projects/rendering-engine/build/install_manifest.txt\"")
+endif(NOT EXISTS "D:/(programmingProjects)/Twitch_projects/rendering-engine/build/install_manifest.txt")
 
-file(READ "D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/install_manifest.txt" files)
+file(READ "D:/(programmingProjects)/Twitch_projects/rendering-engine/build/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach (file ${files})
     message(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")

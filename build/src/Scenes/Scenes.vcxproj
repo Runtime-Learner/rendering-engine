@@ -22,7 +22,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8DE7338C-EC4A-3741-97B0-82CAE12BC3B2}</ProjectGuid>
+    <ProjectGuid>{DFB932BE-A76A-331D-8D51-64B0E7C279BC}</ProjectGuid>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
@@ -59,26 +59,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Scenes\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Scenes.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Scenes</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Scenes\Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Scenes.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Scenes</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\MinSizeRel\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Scenes\MinSizeRel\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Scenes.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Scenes</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\RelWithDebInfo\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Scenes\RelWithDebInfo\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Scenes.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Scenes</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -96,10 +96,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -112,7 +112,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -130,10 +130,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -146,7 +146,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -164,10 +164,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -180,7 +180,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <CompileAs>CompileAsCpp</CompileAs>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -197,10 +197,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\(programmingProjects)\Twitch_projects\rendering-engine\lib;D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -212,10 +212,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/src/Scenes/CMakeLists.txt</Message>
+    <CustomBuild Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine/src/Scenes/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main -BD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/src/Scenes/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine -BD:/(programmingProjects)/Twitch_projects/rendering-engine/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine/build/src/Scenes/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -224,11 +224,11 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Scenes\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/src/Scenes/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine/src/Scenes/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main -BD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/src/Scenes/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine -BD:/(programmingProjects)/Twitch_projects/rendering-engine/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine/build/src/Scenes/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -237,11 +237,11 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Scenes\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/src/Scenes/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine/src/Scenes/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main -BD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/src/Scenes/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine -BD:/(programmingProjects)/Twitch_projects/rendering-engine/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine/build/src/Scenes/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -250,11 +250,11 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Scenes\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/src/Scenes/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/(programmingProjects)/Twitch_projects/rendering-engine/src/Scenes/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main -BD:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine-main-(1)/rendering-engine-main/build/src/Scenes/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/(programmingProjects)/Twitch_projects/rendering-engine -BD:/(programmingProjects)/Twitch_projects/rendering-engine/build --check-stamp-file D:/(programmingProjects)/Twitch_projects/rendering-engine/build/src/Scenes/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -263,16 +263,16 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\src\Scenes\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\(programmingProjects)\Twitch_projects\rendering-engine\build\src\Scenes\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\src\Scenes\scene.cpp" />
+    <ClCompile Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Scenes\scene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\(programmingProjects)\Twitch_projects\rendering-engine-main-(1)\rendering-engine-main\build\ZERO_CHECK.vcxproj">
-      <Project>{9F1B1D7C-CE2A-327C-B54B-58AB1EA436DC}</Project>
+    <ProjectReference Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\build\ZERO_CHECK.vcxproj">
+      <Project>{003BCA89-4668-3C4F-8BEA-ABDAB4CEFEF1}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

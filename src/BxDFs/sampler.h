@@ -35,7 +35,7 @@ class Sampler {
     }
 
     double nextSample() {
-        double r = ((double) rand() / (RAND_MAX));
+        double r = ( rand() / ((double)(RAND_MAX + 1)));
         
         return r;
     }
