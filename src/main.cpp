@@ -13,7 +13,7 @@
 using Eigen::RowVector3d;
 using Eigen::MatrixXd;
 
-Scene getTriangleScene(int width, int height);
+Scene getPrimitivesScene(int width, int height);
 Scene getCornellBox(int width, int height);
 Scene getBunnyScene(int width, int height, int scalingFactor);
 
@@ -57,9 +57,10 @@ int main(int argc, char* argv[])
                 return errorCode;
         }
 
-        Backward_Raytracing RT_renderer;
+        Backward_Raytracing_Matrix RT_renderer;
         Scene s = getCornellBox(width, height);
         // Scene s = getBunnyScene(width, height, 1000);
+        // Scene s = getPrimitivesScene(width, height);
         std::cout << s.geometry.size() << std::endl;
         MatrixXd c = RT_renderer.render(s, spp); 
         printHit(c, s.resx, s.resy, pixels, renderer, texture);
@@ -100,13 +101,14 @@ int initializeWindow(SDL_Window ** window, SDL_Renderer ** renderer, SDL_Texture
         return 0;
 } 
 
-Scene getTriangleScene(int width, int height) {
+Scene getPrimitivesScene(int width, int height) {
   std::vector<Shape> geometry = {
-        new Triangle({5, -2.5, 0}, {-5.0, -2.5, 0}, {0, 2.5, 0}, new DiffuseBRDF({1, 0, 0}))
+        new Triangle({5, -2.5, 0}, {-5.0, -2.5, 0}, {0, 2.5, 0}, new DiffuseBRDF({1, 0, 0})),
+        new Sphere({-4, 2.5, 0}, 2, new DiffuseBRDF({0,0.5,0}))
   };
 
   std::vector<Light> lights = {
-        new PointLight({0, 15, -15}, {36000, 36000, 36000})
+          new PointLight({0, 10, -15}, {36000, 36000, 36000})
   };
   Camera cam = Camera({0, 0, -15}, {0, 0, 0}, {0, 1, 0});
   Scene s = Scene(geometry, lights, cam, 60, width, height);

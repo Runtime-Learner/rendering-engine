@@ -3,7 +3,7 @@
 #include "Cameras/camera.cpp"
 #include "Lights/Lights.h"
 #include "Ray/ray.cpp"
-#include "Renderers/renderer.h"
+#include "Renderers/Renderers.h"
 #include "Scenes/scene.cpp"
 #include "Shapes/Shapes.h"
 #endif

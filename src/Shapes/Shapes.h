@@ -12,4 +12,7 @@
 #ifndef __SHAPES_LIBRARY_H
 #define __SHAPES_LIBRARY_H
 #include "triangle.h"
+#include "sphere.h"
+#include "matrix_ops.h"
+// #include "box.h" //TODO: fix
 #endif

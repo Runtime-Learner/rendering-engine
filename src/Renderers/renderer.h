@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef _RENDERER_CPP
-#define _RENDERER_CPP
+#ifndef _RENDERER_H
+#define _RENDERER_H
 
 #ifndef _USE_MATH_DEFINES
     #define _USE_MATH_DEFINES
@@ -34,5 +34,6 @@ class Backward_Raytracing {
 
         }
         MatrixXd render(Scene scene, int spp);
+        static RowVector3d shade(Scene scene, RowVector3d hitPt, RowVector3d wrWorld, Shape hitObj);
 };
 #endif

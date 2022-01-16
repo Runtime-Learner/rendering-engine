@@ -14,7 +14,6 @@
 static RowVector3d trace(Scene scene, Ray r);
 static RowVector3d intersect(Scene scene, Ray r);
 static int intersect_shadowRay(Scene scene, Ray r);
-static RowVector3d shade(Scene scene, RowVector3d hitPt, RowVector3d wrWorld, Shape hitObj);
 
 MatrixXd Backward_Raytracing::render(Scene scene, int spp)  {
     
@@ -70,12 +69,12 @@ static RowVector3d trace(Scene scene, Ray r) {
             Frame frame = scene.geometry[(int)intersection[1]]._p->getFrame(r.o + r.d * intersection[2]);
             return RowVector3d(1, 1, 1) * frame.cosTheta(frame.toLocal(-r.d));
         }
-        return shade(scene, r.o + r.d * intersection[2], -r.d, scene.geometry[(int)intersection[1]]);
+        return Backward_Raytracing::shade(scene, r.o + r.d * intersection[2], -r.d, scene.geometry[intersection[1]]);
     }
     return RowVector3d(0,0,0);
 }
 
-static RowVector3d shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, Shape hitObj) {
+RowVector3d Backward_Raytracing::shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, Shape hitObj) {
 
     // add shadow ray
     Light light = scene.selectLight();
@@ -85,9 +84,10 @@ static RowVector3d shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, Shap
     RowVector3d light_pos = lightInfo.block<1,3>(0,0);
     RowVector3d wiWorld = lightInfo.block<1,3>(1,0); 
     double dist_squared = wiWorld.dot(wiWorld);
+
     Ray shadowRay = Ray(light_pos, -wiWorld, sqrt(dist_squared) - 1e-5);
     int shadowResult = intersect_shadowRay(scene, shadowRay);
-    
+
     if (shadowResult) {
         return RowVector3d(0, 0, 0);
     }
@@ -95,7 +95,7 @@ static RowVector3d shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, Shap
     
 
     // initialize variables
-    RowVector3d normal = hitObj._p->normal(hit);
+    // double light_pdf = scene.lightPdf();
     wiWorld.normalize();
     RowVector3d wiLocal = hitObj._p->getFrame(hit).toLocal(wiWorld);
     RowVector3d wrLocal = hitObj._p->getFrame(hit).toLocal(wrWorld);

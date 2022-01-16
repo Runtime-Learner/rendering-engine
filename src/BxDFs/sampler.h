@@ -29,6 +29,7 @@
 
 using Eigen::RowVector3d;
 using Eigen::RowVector2d;
+using Eigen::MatrixXd;
 
 
 class Sampler {
@@ -51,6 +52,10 @@ class Sampler {
 
     RowVector2d next2D() {
         return RowVector2d(nextSample(), nextSample());
+    }
+
+    MatrixXd nextMatrix(int row, int col) {
+        return (MatrixXd::Random(row, col).array() + 1.0) / 2.0;
     }
 
     static RowVector2d concentricSampleDisk(RowVector2d sample) {
