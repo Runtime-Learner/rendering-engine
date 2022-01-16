@@ -12,6 +12,11 @@
 #ifndef _RENDERER_H
 #define _RENDERER_H
 
+#ifndef _USE_MATH_DEFINES
+    #define _USE_MATH_DEFINES
+    #include <cmath>
+#endif
+
 #include <iostream>
 #include "eigen3/Eigen/Core"
 #include "eigen3/Eigen/Geometry"

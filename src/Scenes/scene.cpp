@@ -48,7 +48,6 @@ class Scene {
 
         Light selectLight() {
             double index = (sampler.nextSample() * (lights.size()));
-            
             return lights[(int)index];
         }
 

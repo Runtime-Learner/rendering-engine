@@ -1,9 +1,14 @@
+#define SDL_MAIN_HANDLED
+
+#ifdef _MSC_VER
+#    pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+#endif
+
 #include <iostream>
-#include <unistd.h>
 #include <memory>
 #include <vector>
 #include "rendering_engine.h"
-#include <SDL2/SDL.h>
+#include "../lib/SDL2-2.0.20/include/SDL.h"
 
 using Eigen::RowVector3d;
 using Eigen::MatrixXd;
@@ -18,15 +23,16 @@ int initializeWindow(SDL_Window ** window, SDL_Renderer ** renderer, SDL_Texture
 
 int main(int argc, char* argv[])
 {
+        std::cout << "hello\n";
         int width, height, spp;
 
   	// validate user parameters
 	if (argc != 4 || argv[1] == NULL || argv[2] == NULL || argv[3] == NULL) {
 		std::cout << "Invalid parameters: ./app <width> <height> <sample per pixel>\n";
 		std::cout << "Defaulting to 100 x 100 image, 1 sample\n";
-		width = 100;
-		height = 100;
-                spp = 1;
+		width = 250;
+		height = 250;
+                spp = 20;
 	}
 	else {
 		width = atoi(argv[1]);
@@ -82,7 +88,7 @@ int initializeWindow(SDL_Window ** window, SDL_Renderer ** renderer, SDL_Texture
                 return 3;
         }
 
-        *window = SDL_CreateWindow("SDL_test",
+        *window = SDL_CreateWindow("SDL_renderer",
                         SDL_WINDOWPOS_UNDEFINED,
                         SDL_WINDOWPOS_UNDEFINED,
                         500, 500,
@@ -162,7 +168,7 @@ Scene getCornellBox(int width, int height) {
 Scene getBunnyScene(int width, int height, int scalingFactor) {
         double x_cam = (-0.09438042 + -0.0550398) / 2.0  * scalingFactor /2.0;
         double y_cam = (0.0333099 + 0.0573097) / 2.0  * scalingFactor * 2.0;
-        std::vector<Shape> geometry = Scene::loadObjFile("../object_files/bunny.obj", 1000);
+        std::vector<Shape> geometry = Scene::loadObjFile("../../object_files/bunny.obj", 1000);
         std::vector<Light> lights;
         Camera camera = Camera({x_cam, y_cam, scalingFactor / 4.0}, {x_cam, y_cam, -1}, {0, 1, 0});
         Scene s = Scene(geometry, lights, camera, 60, width, height);

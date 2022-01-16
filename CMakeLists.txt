@@ -3,7 +3,13 @@ cmake_minimum_required(VERSION 3.0.0)
 project(Rendering_Engine_Cpp VERSION 0.1.0)
 
 # add the executable
-add_executable(Rendering_Engine_Cpp src/main.cpp)
+add_executable(Rendering_Engine_Cpp  WIN32 src/main.cpp)
+
+# add eigen library
+include_directories(lib)
+
+# add SDL2 library
+add_subdirectory(lib/SDL2-2.0.20)
 
 # add the libraries
 add_subdirectory(src/Cameras)
@@ -22,7 +28,6 @@ target_link_libraries(Rendering_Engine_Cpp PUBLIC Scenes)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC Shapes)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC BxDFs)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC SDL2)
-
 
 include(CTest)
 enable_testing()

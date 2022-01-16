@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\build\CMakeFiles\6d23420a14a8979450fa70ec53bf2d1e\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{EDFC804E-4376-3126-83C8-3C0C96AEE191}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
