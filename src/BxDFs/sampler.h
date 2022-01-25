@@ -75,6 +75,11 @@ class Sampler {
         return r * RowVector2d({cos(theta), sin(theta)});
     }
 
+    static RowVector2d uniformSampleTriangle(RowVector2d sample) {
+        double u = sqrt(1 - sample[0]);
+        return RowVector2d(1 - u, u * sample[1]);
+    }
+
     static RowVector3d cosineSampleHemisphere(RowVector2d sample) {
         RowVector2d d = concentricSampleDisk(sample);
         double z = sqrt(std::max(0.0, 1 - d[0] * d[0] - d[1] * d[1]));
@@ -83,6 +88,19 @@ class Sampler {
 
     static double cosineHemispherePdf(RowVector3d v) {
         return (v[2] > 0) ? v[2] * M_1_PI : 0;
+    }
+
+    static RowVector3d uniformSamplePhongLobe(RowVector2d sample, int n) {
+        double z = pow(1 - sample[0], 1 / (n + 1));
+        double r = sqrt(1 - z * z);
+        double phi = 2 * M_PI * sample[1];
+        double x = r * cos(phi);
+        double y = r * sin(phi);
+        return RowVector3d({x, y, z});
+    }
+    
+    static double uniformPhongLobePdf(RowVector3d wi, int n) {
+        return (n + 1) / (2 * M_PI) * pow(wi[2], n);
     }
 };
 #endif

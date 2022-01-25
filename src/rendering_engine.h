@@ -6,4 +6,5 @@
 #include "Renderers/Renderers.h"
 #include "Scenes/scene.cpp"
 #include "Shapes/Shapes.h"
+#include "BxDFs/BxDF.h"
 #endif

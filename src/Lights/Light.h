@@ -24,6 +24,16 @@ using Eigen::RowVector3d;
 class Light {
     public:
         struct Interface {
+            /**
+             * @brief sample the lightsource "by the area"
+             * 
+             * @param sample 
+             * @param hit 
+             * @return MatrixXd of size 3x3, where each row represents:
+             *  - sampled point on light
+             *  - light normal at sampled point
+             *  - wiworld
+             */
             virtual MatrixXd sampleArea(Sampler sample, RowVector3d hit) = 0;
             virtual double pdfArea() = 0;
             virtual MatrixXd SampleSolidAngle(Sampler sample, RowVector3d hit) = 0;

@@ -13,4 +13,5 @@
 #ifndef __BxDF_LIBRARY
 #define  __BxDF_LIBRARY
 #include "diffuseBRDF.cpp"
+#include "phongBRDF.cpp"
 #endif

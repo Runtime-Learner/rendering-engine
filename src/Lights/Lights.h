@@ -13,4 +13,5 @@
 #define __LIGHTS_LIBRARY_H
 #include "Light.h"
 #include "pointlight.h"
+#include "quadlight.h"
 #endif

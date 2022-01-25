@@ -15,7 +15,7 @@ static RowVector3d trace(Scene scene, Ray r);
 static RowVector3d intersect(Scene scene, Ray r);
 static int intersect_shadowRay(Scene scene, Ray r);
 
-MatrixXd Backward_Raytracing::render(Scene scene, int spp)  {
+MatrixXd Backward_Raytracing::render(Scene scene, int spp, int startx, int endx, int starty, int endy)  {
     
     int resx = scene.resx;
     int resy = scene.resy;
@@ -45,8 +45,8 @@ MatrixXd Backward_Raytracing::render(Scene scene, int spp)  {
     
     // iterate over all image pixels, generate a ray, and trace it
     RowVector3d color(0, 0, 0);
-    for (int x= 0; x < resx; x++) {
-        for (int y= 0; y < resy; y++) {
+    for (int x= startx; x < endx; x++) {
+        for (int y= starty; y < endy; y++) {
             color = {0, 0, 0};
             for (int s = 0; s < spp; s++) {
                 RowVector3d pixel = img_plane_initialPt - del_v * (y + scene.sampler.nextSample()) - del_h * (x + scene.sampler.nextSample());
@@ -56,7 +56,6 @@ MatrixXd Backward_Raytracing::render(Scene scene, int spp)  {
             color /= spp;
             imgBuffer.block<1,3>(y * resx + x,0) = color.cwiseMin(1).cwiseMax(0); //TODO: scaling factor can be changed to alter ISO
         }
-        std::cout << x << "/" << resx << std::endl;
     }
     return imgBuffer;
 }
@@ -69,7 +68,7 @@ static RowVector3d trace(Scene scene, Ray r) {
             Frame frame = scene.geometry[(int)intersection[1]]._p->getFrame(r.o + r.d * intersection[2]);
             return RowVector3d(1, 1, 1) * frame.cosTheta(frame.toLocal(-r.d));
         }
-        return Backward_Raytracing::shade(scene, r.o + r.d * intersection[2], -r.d, scene.geometry[intersection[1]]);
+        return Backward_Raytracing::shade(scene, r.o + r.d * intersection[2], -r.d, scene.geometry[(int)intersection[1]]);
     }
     return RowVector3d(0,0,0);
 }
@@ -82,20 +81,22 @@ RowVector3d Backward_Raytracing::shade(Scene scene, RowVector3d hit, RowVector3d
     
     MatrixXd lightInfo = light._p->sampleArea(scene.sampler, hit);
     RowVector3d light_pos = lightInfo.block<1,3>(0,0);
-    RowVector3d wiWorld = lightInfo.block<1,3>(1,0); 
+    RowVector3d light_normal = lightInfo.block<1,3>(1,0); 
+    RowVector3d wiWorld = lightInfo.block<1,3>(2,0); 
     double dist_squared = wiWorld.dot(wiWorld);
-
     Ray shadowRay = Ray(light_pos, -wiWorld, sqrt(dist_squared) - 1e-5);
     int shadowResult = intersect_shadowRay(scene, shadowRay);
-
+    
     if (shadowResult) {
         return RowVector3d(0, 0, 0);
+    } else {
+        return RowVector3d(1, 1, 1);
     }
 
     
 
     // initialize variables
-    // double light_pdf = scene.lightPdf();
+    RowVector3d normal = hitObj._p->normal(hit);
     wiWorld.normalize();
     RowVector3d wiLocal = hitObj._p->getFrame(hit).toLocal(wiWorld);
     RowVector3d wrLocal = hitObj._p->getFrame(hit).toLocal(wrWorld);

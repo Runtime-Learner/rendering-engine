@@ -31,9 +31,9 @@ class PointLight : public Light::Interface {
             radiance = rad;
         }
 
-        MatrixXd sampleArea(Sampler sample, RowVector3d hit);
+        MatrixXd sampleArea(Sampler sampler, RowVector3d hit);
         double pdfArea();
-        MatrixXd SampleSolidAngle(Sampler sample, RowVector3d hit);
+        MatrixXd SampleSolidAngle(Sampler sampler, RowVector3d hit);
         double pdfSolidAngle(RowVector3d hit);
         RowVector3d getRadiance(RowVector3d hit);
 };

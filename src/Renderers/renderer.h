@@ -33,7 +33,7 @@ class Backward_Raytracing {
         Backward_Raytracing() {
 
         }
-        MatrixXd render(Scene scene, int spp);
+        MatrixXd render(Scene scene, int spp, int startx, int endx, int starty, int endy);
         static RowVector3d shade(Scene scene, RowVector3d hitPt, RowVector3d wrWorld, Shape hitObj);
 };
 #endif

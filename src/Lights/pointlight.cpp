@@ -11,9 +11,10 @@
 #include "pointlight.h"
 
 
-MatrixXd PointLight::sampleArea(Sampler sample, RowVector3d hit) {
-    MatrixXd tmp(2, 3);
+MatrixXd PointLight::sampleArea(Sampler sampler, RowVector3d hit) {
+    MatrixXd tmp(3, 3);
     tmp.block<1,3>(0,0) = pos;
+    tmp.block<1,3>(1,0) = pos - hit; tmp.block<1,3>(1,0).normalize();
     tmp.block<1,3>(1,0) = pos - hit;
     return tmp;
 }
@@ -22,8 +23,8 @@ double PointLight::pdfArea() {
     return 0.0;
 }
 
-MatrixXd PointLight::SampleSolidAngle(Sampler sample, RowVector3d hit) {
-    return sampleArea(sample, hit);
+MatrixXd PointLight::SampleSolidAngle(Sampler sampler, RowVector3d hit) {
+    return sampleArea(sampler, hit);
 }
 
 double PointLight::pdfSolidAngle(RowVector3d hit) {

@@ -29,6 +29,6 @@ class Backward_Raytracing_Matrix {
         Backward_Raytracing_Matrix() {
 
         }
-        MatrixXd render(Scene scene, int spp);
+        MatrixXd render(Scene scene, int spp, int startx, int endx, int starty, int endy);
 };
 #endif

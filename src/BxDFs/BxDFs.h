@@ -13,6 +13,7 @@
 #define  __BxDF_LIBRARY_H
 #include "BxDF.h"
 #include "diffuseBRDF.cpp"
+#include "phongBRDF.cpp"
 #include "Frame.h"
 #include "sampler.h"
 #endif

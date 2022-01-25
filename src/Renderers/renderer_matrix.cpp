@@ -15,7 +15,7 @@
 static MatrixXd intersect_matrix(Scene scene, MatrixXd rayDir_mat, RowVector3d initialPt);
 static MatrixXd trace_matrix(Scene scene, MatrixXd rayDir_mat, RowVector3d initialPt);
 
-MatrixXd Backward_Raytracing_Matrix::render(Scene scene, int spp)  {
+MatrixXd Backward_Raytracing_Matrix::render(Scene scene, int spp, int startx, int endx, int starty, int endy)  {
     
     int resx = scene.resx;
     int resy = scene.resy;
@@ -56,7 +56,7 @@ MatrixXd Backward_Raytracing_Matrix::render(Scene scene, int spp)  {
     for (int s = 0; s < spp; s++) {
         rayPos_mat = pixelBase - matrix_makeMatrixFromArrAndMultiplier(del_v, mat_v + scene.sampler.nextMatrix(resy * resx, 1)) - matrix_makeMatrixFromArrAndMultiplier(del_h, mat_h + scene.sampler.nextMatrix(resy * resx, 1));
         imgBuffer += trace_matrix(scene, matrix_rowSumWithVector(rayPos_mat, -cam.eye), cam.eye);
-        std::cout << s << "/" << spp << std::endl;
+        // std::cout << s << "/" << spp << std::endl;
     }
 
     return imgBuffer / spp;
@@ -100,13 +100,15 @@ MatrixXd shade_matrix(Scene scene, MatrixXd hit_mat, MatrixXd wrWorld_mat, Matri
 static MatrixXd trace_matrix(Scene scene, MatrixXd rayDir_mat, RowVector3d initialPt) {
     MatrixXd intersection_data = intersect_matrix(scene, rayDir_mat, initialPt); // [0:2] hit dist [3] obj id
     MatrixXd imgData(rayDir_mat.rows(), rayDir_mat.cols());
+
+    #pragma omp parallel for
     for (int row = 0; row < rayDir_mat.rows(); row++) {
         if (intersection_data(row, 1) == -1) {
             imgData.block<1, 3>(row, 0) = RowVector3d({0, 0, 0});
         } else {
             if (scene.lights.size() == 0) {
                 Frame frame = scene.geometry[intersection_data(row, 1)]._p->getFrame(initialPt + rayDir_mat.row(row) * intersection_data(row, 0));
-                return RowVector3d(1, 1, 1) * frame.cosTheta(frame.toLocal(-rayDir_mat.row(row)));
+                imgData.block<1, 3>(row, 0) =  RowVector3d(1, 1, 1) * frame.cosTheta(frame.toLocal(-rayDir_mat.row(row)));
             }
             imgData.block<1, 3>(row, 0) = Backward_Raytracing::shade(scene, initialPt + rayDir_mat.row(row) * intersection_data(row, 0), {0,0,0}/**-rayDir_mat.row(row) **/, scene.geometry[intersection_data(row, 1)]);
         }

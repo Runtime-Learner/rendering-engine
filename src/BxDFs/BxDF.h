@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <memory>
+#include <math.h>
 #include "eigen3/Eigen/Core"
 #include "eigen3/Eigen/Geometry"
 #include "sampler.h"
@@ -22,7 +23,7 @@ class BxDF {
     public:
         struct Interface {
             virtual RowVector3d eval(RowVector3d hitPt, RowVector3d wi, RowVector3d wr) = 0;
-            virtual double sample(Sampler sampler, RowVector3d wr)             = 0;
+            virtual RowVector3d sample(Sampler sampler, RowVector3d wr)             = 0;
             virtual double pdf(RowVector3d wi, RowVector3d wr)             = 0;
             // TODO: add support for SIMD matrix_intersect function
 
