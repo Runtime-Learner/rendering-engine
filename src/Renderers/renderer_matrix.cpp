@@ -110,7 +110,7 @@ static MatrixXd trace_matrix(Scene scene, MatrixXd rayDir_mat, RowVector3d initi
                 Frame frame = scene.geometry[intersection_data(row, 1)]._p->getFrame(initialPt + rayDir_mat.row(row) * intersection_data(row, 0));
                 imgData.block<1, 3>(row, 0) =  RowVector3d(1, 1, 1) * frame.cosTheta(frame.toLocal(-rayDir_mat.row(row)));
             }
-            imgData.block<1, 3>(row, 0) = Backward_Raytracing::shade(scene, initialPt + rayDir_mat.row(row) * intersection_data(row, 0), {0,0,0}/**-rayDir_mat.row(row) **/, scene.geometry[intersection_data(row, 1)]);
+            imgData.block<1, 3>(row, 0) = Backward_Raytracing::shade(scene, initialPt + rayDir_mat.row(row) * intersection_data(row, 0), {0,0,0}/**-rayDir_mat.row(row) **/, (int)intersection_data(row, 1));
         }
     }
     return imgData;

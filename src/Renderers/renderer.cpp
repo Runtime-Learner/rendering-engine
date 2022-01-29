@@ -13,7 +13,7 @@
 
 static RowVector3d trace(Scene scene, Ray r);
 static RowVector3d intersect(Scene scene, Ray r);
-static int intersect_shadowRay(Scene scene, Ray r);
+static int intersect_shadowRay(Scene scene, Ray r, int hitID);
 
 MatrixXd Backward_Raytracing::render(Scene scene, int spp, int startx, int endx, int starty, int endy)  {
     
@@ -68,30 +68,34 @@ static RowVector3d trace(Scene scene, Ray r) {
             Frame frame = scene.geometry[(int)intersection[1]]._p->getFrame(r.o + r.d * intersection[2]);
             return RowVector3d(1, 1, 1) * frame.cosTheta(frame.toLocal(-r.d));
         }
-        return Backward_Raytracing::shade(scene, r.o + r.d * intersection[2], -r.d, scene.geometry[(int)intersection[1]]);
+        return Backward_Raytracing::shade(scene, r.o + r.d * intersection[2], -r.d, (int)intersection[1]);
     }
     return RowVector3d(0,0,0);
 }
 
-RowVector3d Backward_Raytracing::shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, Shape hitObj) {
+RowVector3d Backward_Raytracing::shade(Scene scene, RowVector3d hit, RowVector3d wrWorld, int hitShapeID) {
+
+    Shape hitObj = scene.geometry[hitShapeID];
 
     // add shadow ray
     Light light = scene.selectLight();
     double light_pdf = scene.lightPdf();
     
     MatrixXd lightInfo = light._p->sampleArea(scene.sampler, hit);
+    // std::cout << lightInfo << std::endl;
     RowVector3d light_pos = lightInfo.block<1,3>(0,0);
     RowVector3d light_normal = lightInfo.block<1,3>(1,0); 
     RowVector3d wiWorld = lightInfo.block<1,3>(2,0); 
     double dist_squared = wiWorld.dot(wiWorld);
-    Ray shadowRay = Ray(light_pos, -wiWorld, sqrt(dist_squared) - 1e-5);
-    int shadowResult = intersect_shadowRay(scene, shadowRay);
+    Ray shadowRay = Ray(light_pos -wiWorld * 1e-5, -wiWorld, sqrt(dist_squared));
+    int shadowResult = intersect_shadowRay(scene, shadowRay, hitShapeID);
     
     if (shadowResult) {
         return RowVector3d(0, 0, 0);
-    } else {
-        return RowVector3d(1, 1, 1);
-    }
+    } 
+    // else {
+    //     return RowVector3d(1, 1, 1);
+    // }
 
     
 
@@ -104,10 +108,10 @@ RowVector3d Backward_Raytracing::shade(Scene scene, RowVector3d hit, RowVector3d
     // Implement radiance of diffusely reflected light for point light
     RowVector3d Ld = (M_1_PI * 0.25)/(dist_squared) * light._p->getRadiance(hit).array() * hitObj._p->mat._p->eval(hit, wiLocal, wrLocal).array(); //TODO: * light_pdf;
 
-    return Ld;//hitObj._p->mat._p->eval(hit, wrLocal, wrLocal);
+    return Ld; // hitObj._p->mat._p->eval(hit, wrLocal, wrLocal);
 }
 
-static int intersect_shadowRay(Scene scene, Ray r) {
+static int intersect_shadowRay(Scene scene, Ray r, int hitID) {
     /**
     Method to intersect all objects in the scene
     Parameters:
@@ -127,6 +131,9 @@ static int intersect_shadowRay(Scene scene, Ray r) {
     int id = -1;
 
     for (int i = 0; i < n; i++) {
+        if (i == hitID) {   // skip obj that we know the ray will hit
+            continue;
+        }
         d = scene.geometry[i]._p->intersect(r);
         if (d > 0.0 && d < t) { 
             return 1;

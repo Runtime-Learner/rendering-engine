@@ -1,3 +1,19 @@
+/**
+ * @file main.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2022-01-28
+ * 
+ * @copyright (c) 2022 
+ * This file is part of SimpleEngine. SimpleEngine is free software: you can redistribute it and/or modify it under the terms 
+ * of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. 
+ * SimpleEngine is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * See the GNU General Public License for more details. 
+ * You should have received a copy of the GNU General Public License along with Foobar. If not, see <https://www.gnu.org/licenses/>.
+ * 
+ */
+
 #define SDL_MAIN_HANDLED
 
 #ifdef _MSC_VER
@@ -34,8 +50,8 @@ int main(int argc, char* argv[])
 	if (argc != 4 || argv[1] == NULL || argv[2] == NULL || argv[3] == NULL) {
 		std::cout << "Invalid parameters: ./app <width> <height> <sample per pixel>\n";
 		std::cout << "Defaulting to 100 x 100 image, 1 sample\n";
-		width = 250;
-		height = 250;
+		width = 64;
+		height = 64;
                 spp = 1;
 	}
 	else {
@@ -66,6 +82,7 @@ int main(int argc, char* argv[])
         // SDL_RenderClear(renderer);
 
         Backward_Raytracing RT_renderer;
+        // Scene s = getCornellBox(width, height);
         Scene s = getCornellBox_quadLight(width, height);
         // Scene s = getBunnyScene(width, height, 1000);
         // Scene s = getPrimitivesScene(width, height);
@@ -185,7 +202,7 @@ Scene getCornellBox_quadLight(int width, int height) {
                 new Triangle({265.0, 0.0, 296.0}, {423.0, 330.0, 247.0}, {423.0, 0.0, 247.0}, new DiffuseBRDF({0.85, 0.85, 0.85}))
         };
         std::vector<Light> lights = {
-                new QuadLight({343.0, 548.7999, 227.0}, {343.0, 548.7999, 332.0}, {213.0, 548.7999, 332.0}, {213.0, 548.7999, 227.0}, {60, 60, 60})
+                new QuadLight({343.0, 548.7999, 227.0}, {343.0, 548.7999, 332.0}, {213.0, 548.7999, 332.0}, {213.0, 548.7999, 227.0}, {5e6, 5e6, 5e6})
         };
         Camera cam = Camera({278, 273 , -800}, {278, 273, 0}, {0, 1, 0});
         Scene s = Scene(geometry, lights, cam, 38, width, height);
