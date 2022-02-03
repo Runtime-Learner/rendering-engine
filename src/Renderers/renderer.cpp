@@ -49,7 +49,7 @@ MatrixXd Backward_Raytracing::render(Scene scene, int spp, int startx, int endx,
         for (int y= starty; y < endy; y++) {
             color = {0, 0, 0};
             for (int s = 0; s < spp; s++) {
-                RowVector3d pixel = img_plane_initialPt - del_v * (y + 0.5 /*scene.sampler.nextSample()*/) - del_h * (x + 0.5 /*scene.sampler.nextSample()*/);
+                RowVector3d pixel = img_plane_initialPt - del_v * (y + scene.sampler.nextSample()) - del_h * (x + scene.sampler.nextSample());
                 RowVector3d rayDir = pixel - cam.eye;
                 color += trace(scene, Ray(cam.eye, rayDir));
             }
