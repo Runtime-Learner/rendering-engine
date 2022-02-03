@@ -5,7 +5,12 @@
  * @version 0.1
  * @date 2022-01-08
  * 
- * @copyright Copyright (c) 2022
+ * @copyright (c) 2022 
+ * This file is part of SimpleEngine. SimpleEngine is free software: you can redistribute it and/or modify it under the terms 
+ * of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. 
+ * SimpleEngine is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+ * See the GNU General Public License for more details. 
+ * You should have received a copy of the GNU General Public License along with Foobar. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -24,6 +29,16 @@ using Eigen::RowVector3d;
 class Light {
     public:
         struct Interface {
+            /**
+             * @brief sample the lightsource "by the area"
+             * 
+             * @param sample 
+             * @param hit 
+             * @return MatrixXd of size 3x3, where each row represents:
+             *  - sampled point on light
+             *  - light normal at sampled point
+             *  - wiworld
+             */
             virtual MatrixXd sampleArea(Sampler sample, RowVector3d hit) = 0;
             virtual double pdfArea() = 0;
             virtual MatrixXd SampleSolidAngle(Sampler sample, RowVector3d hit) = 0;

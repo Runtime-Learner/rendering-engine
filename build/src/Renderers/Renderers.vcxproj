@@ -268,7 +268,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Renderers\renderer.cpp" />
+    <ClCompile Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\src\Renderers\Renderers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:\(programmingProjects)\Twitch_projects\rendering-engine\build\ZERO_CHECK.vcxproj">

@@ -29,6 +29,11 @@ target_link_libraries(Rendering_Engine_Cpp PUBLIC Shapes)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC BxDFs)
 target_link_libraries(Rendering_Engine_Cpp PUBLIC SDL2)
 
+#find_package(OpenMP)
+#if(OpenMP_CXX_FOUND)
+#    target_link_libraries(Rendering_Engine_Cpp PUBLIC OpenMP::OpenMP_CXX)
+#endif()
+
 include(CTest)
 enable_testing()
 
