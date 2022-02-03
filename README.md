@@ -11,7 +11,7 @@ A rendering engine written in C++ using SDL2.0 for graphics
 - [ ] add boxes
 
 ### Supported light sources: ###
-- [ ] add quadlights 
+- [x] add quadlights 
 - [ ] add spherelights
 
 ### Scenes: ###
