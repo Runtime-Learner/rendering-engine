@@ -33,13 +33,13 @@ A rendering engine written in C++ using SDL2.0 for graphics
 ![img_primitives](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/primitives_list.png) 
 
 ### Cornell box: ###
-| 1 quadlight (512x512), 50 samples per pixel | 1 quadlight (250x250) soft shadow, 30 samples per pixel |
+| 1 point light (512x512), 50 samples per pixel | 3 point lights (512x512), 18 samples per pixel |
 :-------------------------:|:-------------------------:
 | ![img_cornell_box_512x512](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/cornell-box-ptLight.png) | ![img_cornell_box_512x512, 3 lights](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/cornell-box-3-ptLights_18samples.png) |
 
 | 1 quadlight (512x512), 30 samples per pixel  | 1 quadlight (250x250), 30 samples per pixel |
 :-------------------------:|:-------------------------:
-|![img_cornell_box_1 quadlight (512x512), 30 samples per pixel](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/cornell-box-1-quadlight_50samples.png)  | ![img_cornell_box_1 quadlight (250x250) soft shadow, 30 samples per pixel](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/cornell-box-1-quadlight-250x250_30samples.PNG)  |
+|![img_cornell_box_1 quadlight (512x512), 50 samples per pixel](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/cornell-box-1-quadlight_50samples.png)  | ![img_cornell_box_1 quadlight (250x250) soft shadow, 30 samples per pixel](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/cornell-box-1-quadlight-250x250_30samples.PNG)  |
 
 ### Bunny.obj (100x100): ###
 | face normals | face normal * cos( ray dir ) |
