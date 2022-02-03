@@ -1,6 +1,6 @@
 /**
  * @file main.cpp
- * @author your name (you@domain.com)
+ * @author Matthias Arabian
  * @brief 
  * @version 0.1
  * @date 2022-01-28
@@ -34,7 +34,9 @@ Scene getCornellBox(int width, int height);
 Scene getCornellBox_quadLight(int width, int height);
 Scene getBunnyScene(int width, int height, int scalingFactor);
 
-void printHit(MatrixXd img, int width, int height, std::vector< unsigned char > pixels, SDL_Renderer * renderer, SDL_Texture * texture, int startx, int endx, int starty, int endy);
+void updateTexture(MatrixXd img, int width, int height, std::vector< unsigned char > pixels, SDL_Renderer * renderer, SDL_Texture * texture, int startx, int endx, int starty, int endy);
+void saveRender(MatrixXd img, int width, int height, std::vector< unsigned char > pixels, char* filename);
+
 
 int initializeWindow(SDL_Window ** window, SDL_Renderer ** renderer, SDL_Texture ** texture, int width, int height);
 
@@ -50,8 +52,8 @@ int main(int argc, char* argv[])
 	if (argc != 4 || argv[1] == NULL || argv[2] == NULL || argv[3] == NULL) {
 		std::cout << "Invalid parameters: ./app <width> <height> <sample per pixel>\n";
 		std::cout << "Defaulting to 100 x 100 image, 1 sample\n";
-		width = 64;
-		height = 64;
+		width = 100;
+		height = 100;
                 spp = 1;
 	}
 	else {
@@ -83,8 +85,8 @@ int main(int argc, char* argv[])
 
         Backward_Raytracing RT_renderer;
         // Scene s = getCornellBox(width, height);
-        Scene s = getCornellBox_quadLight(width, height);
-        // Scene s = getBunnyScene(width, height, 1000);
+        // Scene s = getCornellBox_quadLight(width, height);
+        Scene s = getBunnyScene(width, height, 1000);
         // Scene s = getPrimitivesScene(width, height);
         std::cout << s.geometry.size() << std::endl;
         MatrixXd c = RT_renderer.render(s, spp, 0, width, 0, height);
@@ -95,7 +97,7 @@ int main(int argc, char* argv[])
         while (running_flag) {
                 c = (c*numRenders + RT_renderer.render(s, spp, 0, width, 0, height)) / (numRenders + 1); 
                 numRenders++;
-                printHit(c, s.resx, s.resy, pixels, renderer, texture, 0, width, 0, height);
+                updateTexture(c, s.resx, s.resy, pixels, renderer, texture, 0, width, 0, height);
 
                 SDL_RenderCopy(renderer, texture, NULL, NULL);
                 SDL_RenderPresent(renderer);
@@ -110,13 +112,17 @@ int main(int argc, char* argv[])
                                 running_flag = 0; 
                                 break;
                         }
-                }
 
-                if (numRenders >= 50) {
-                        c = RT_renderer.render(s, spp, 0, width, 0, height);
-                        numRenders = 1;
+                }
+                SDL_RenderCopy(renderer, texture, NULL, NULL);
+                SDL_RenderPresent(renderer);
+
+                if (numRenders >= 1500) {
+                        running_flag = 0;
                 }
         }
+
+        saveRender(c, s.resx, s.resy, pixels, "output.png");
 
         SDL_DestroyRenderer(renderer);
         SDL_Quit();
@@ -149,8 +155,8 @@ Scene getPrimitivesScene(int width, int height) {
   };
 
   std::vector<Light> lights = {
-          new PointLight({0, 30, -5}, {36000, 36000, 36000}),
-          new PointLight({0, 10, -15}, {36000, 36000, 36000})
+          new PointLight({0, 30, -5}, {16000, 16000, 16000}),
+          new PointLight({0, 10, -15}, {16000, 16000, 16000})
   };
   Camera cam = Camera({0, 0, -15}, {0, 0, 0}, {0, 1, 0});
   Scene s = Scene(geometry, lights, cam, 60, width, height);
@@ -250,6 +256,8 @@ Scene getCornellBox(int width, int height) {
                 new Triangle({265.0, 0.0, 296.0}, {423.0, 330.0, 247.0}, {423.0, 0.0, 247.0}, new DiffuseBRDF({0.85, 0.85, 0.85}))
         };
         std::vector<Light> lights = {
+                // new PointLight({278, 508, 279.5}, {5e6, 5e6, 5e6}),
+                // new PointLight({278, 208, 279.5}, {5e6, 5e6, 5e6})
                 new PointLight({178, 508, 279.5}, {0, 5e6, 5e6}),
                 new PointLight({278, 508, 279.5}, {5e6, 5e6, 0}),
                 new PointLight({378, 508, 279.5}, {5e6, 0, 5e6})
@@ -269,7 +277,7 @@ Scene getBunnyScene(int width, int height, int scalingFactor) {
         return s;
 }
 
-void printHit(MatrixXd img, int width, int height, std::vector< unsigned char > pixels, SDL_Renderer * renderer, SDL_Texture * texture, int startx, int endx, int starty, int endy) {
+void updateTexture(MatrixXd img, int width, int height, std::vector< unsigned char > pixels, SDL_Renderer * renderer, SDL_Texture * texture, int startx, int endx, int starty, int endy) {
         SDL_SetRenderTarget(renderer, texture);
         SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0x00);
         SDL_RenderClear(renderer);
@@ -291,4 +299,23 @@ void printHit(MatrixXd img, int width, int height, std::vector< unsigned char > 
         pixels.data(),
         width * 4
         );
+}
+
+void saveRender(MatrixXd img, int width, int height, std::vector< unsigned char > pixels, char* filename) {
+
+        for (int y= 0; y < height; y++) {	
+		for (int x= 0; x < width; x++) {
+                        int pxid =  (y * width + x) * 4;  
+                        pixels[pxid + 3] = 255; 
+                        pixels[pxid + 2] = (int) (img(y * width + x, 2) * 255);
+                        pixels[pxid + 1] = (int) (img(y * width + x, 1) * 255);
+                        pixels[pxid] = (int) (img(y * width + x, 0) * 255);
+                }
+        }
+
+        //save image to file
+        unsigned errorPNGDecode;
+        errorPNGDecode = lodepng_encode32_file(filename, pixels.data(), width, height);
+        if (errorPNGDecode)
+            printf("error %u: %s\n", errorPNGDecode, lodepng_error_text(errorPNGDecode));
 }

@@ -7,4 +7,5 @@
 #include "Scenes/scene.cpp"
 #include "Shapes/Shapes.h"
 #include "BxDFs/BxDF.h"
+#include "Scenes/lodepng.cpp"
 #endif

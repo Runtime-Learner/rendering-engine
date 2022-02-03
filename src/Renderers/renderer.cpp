@@ -49,7 +49,7 @@ MatrixXd Backward_Raytracing::render(Scene scene, int spp, int startx, int endx,
         for (int y= starty; y < endy; y++) {
             color = {0, 0, 0};
             for (int s = 0; s < spp; s++) {
-                RowVector3d pixel = img_plane_initialPt - del_v * (y + scene.sampler.nextSample()) - del_h * (x + scene.sampler.nextSample());
+                RowVector3d pixel = img_plane_initialPt - del_v * (y + 0.5 /*scene.sampler.nextSample()*/) - del_h * (x + 0.5 /*scene.sampler.nextSample()*/);
                 RowVector3d rayDir = pixel - cam.eye;
                 color += trace(scene, Ray(cam.eye, rayDir));
             }
@@ -66,6 +66,7 @@ static RowVector3d trace(Scene scene, Ray r) {
     if (intersection[0] > 0) {
         if (scene.lights.size() == 0) {
             Frame frame = scene.geometry[(int)intersection[1]]._p->getFrame(r.o + r.d * intersection[2]);
+            return scene.geometry[(int)intersection[1]]._p->normal(r.o + r.d * intersection[2]);
             return RowVector3d(1, 1, 1) * frame.cosTheta(frame.toLocal(-r.d));
         }
         return Backward_Raytracing::shade(scene, r.o + r.d * intersection[2], -r.d, (int)intersection[1]);
@@ -78,37 +79,39 @@ RowVector3d Backward_Raytracing::shade(Scene scene, RowVector3d hit, RowVector3d
     Shape hitObj = scene.geometry[hitShapeID];
 
     // add shadow ray
-    Light light = scene.selectLight();
-    double light_pdf = scene.lightPdf();
-    
-    MatrixXd lightInfo = light._p->sampleArea(scene.sampler, hit);
-    // std::cout << lightInfo << std::endl;
-    RowVector3d light_pos = lightInfo.block<1,3>(0,0);
-    RowVector3d light_normal = lightInfo.block<1,3>(1,0); 
-    RowVector3d wiWorld = lightInfo.block<1,3>(2,0); 
-    double dist_squared = wiWorld.dot(wiWorld);
-    Ray shadowRay = Ray(light_pos -wiWorld * 1e-5, -wiWorld, sqrt(dist_squared));
-    int shadowResult = intersect_shadowRay(scene, shadowRay, hitShapeID);
-    
-    if (shadowResult) {
-        return RowVector3d(0, 0, 0);
-    } 
-    // else {
-    //     return RowVector3d(1, 1, 1);
-    // }
+    RowVector3d Ld(0,0,0);
+    for (int lightID=0; lightID < scene.lights.size(); lightID++) {
+        Light light = scene.lights[lightID];
+        double light_pdf = scene.lightPdf();
+        
+        MatrixXd lightInfo = light._p->sampleArea(scene.sampler, hit);
+        // std::cout << lightInfo << std::endl;
+        RowVector3d light_pos = lightInfo.block<1,3>(0,0);
+        RowVector3d light_normal = lightInfo.block<1,3>(1,0); 
+        RowVector3d wiWorld = lightInfo.block<1,3>(2,0); 
+        double dist_squared = wiWorld.dot(wiWorld);
+        Ray shadowRay = Ray(light_pos -wiWorld * 1e-5, -wiWorld, sqrt(dist_squared));
+        int shadowResult = intersect_shadowRay(scene, shadowRay, hitShapeID);
+        
+        if (shadowResult) {
+            continue;
+        } 
+        // else {
+        //     return RowVector3d(1, 1, 1);
+        // }
 
-    
+        // initialize variables
+        RowVector3d normal = hitObj._p->normal(hit);
+        wiWorld.normalize();
+        RowVector3d wiLocal = hitObj._p->getFrame(hit).toLocal(wiWorld);
+        RowVector3d wrLocal = hitObj._p->getFrame(hit).toLocal(wrWorld);
 
-    // initialize variables
-    RowVector3d normal = hitObj._p->normal(hit);
-    wiWorld.normalize();
-    RowVector3d wiLocal = hitObj._p->getFrame(hit).toLocal(wiWorld);
-    RowVector3d wrLocal = hitObj._p->getFrame(hit).toLocal(wrWorld);
+        // Implement radiance of diffusely reflected light for point light
+        Ld = Ld.array() + (M_1_PI * 0.25)/(dist_squared) * light._p->getRadiance(hit).array() * hitObj._p->mat._p->eval(hit, wiLocal, wrLocal).array(); //TODO: * light_pdf;
+    }
 
-    // Implement radiance of diffusely reflected light for point light
-    RowVector3d Ld = (M_1_PI * 0.25)/(dist_squared) * light._p->getRadiance(hit).array() * hitObj._p->mat._p->eval(hit, wiLocal, wrLocal).array(); //TODO: * light_pdf;
 
-    return Ld; // hitObj._p->mat._p->eval(hit, wrLocal, wrLocal);
+    return Ld / scene.lights.size(); // hitObj._p->mat._p->eval(hit, wrLocal, wrLocal);
 }
 
 static int intersect_shadowRay(Scene scene, Ray r, int hitID) {

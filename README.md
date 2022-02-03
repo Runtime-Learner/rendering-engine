@@ -50,3 +50,4 @@ A rendering engine written in C++ using SDL2.0 for graphics
 :-------------------------:|:-------------------------:
 | ![face normals](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/bunny_normal_100x100.jpg) | ![normal cos ray](https://github.com/Runtime-Learner/rendering-engine/blob/generalize_classes/output_images/bunny_normalRay_100x100.jpg) |
 
+## Credit for the lodepng.cpp and lodepng.h files goes to Lode Vandevenne
